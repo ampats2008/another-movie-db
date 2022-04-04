@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Home: NextPage = () => {
   return (<>
-      <p>Welcome to the home page.</p>
+      <p className='mt-10 ml-10'>Welcome to the home page.</p>
   </>)
 }
 

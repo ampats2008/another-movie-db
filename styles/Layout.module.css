@@ -1,5 +1,5 @@
 .layoutGrid {
-    @apply bg-slate-900;
+    @apply bg-gray-200;
     grid-template-areas: 
         'header header header'
         'main main footer'
@@ -9,7 +9,7 @@
 
 .header {
     grid-area: header;
-    @apply sm:flex justify-between py-9;
+    @apply flex flex-wrap justify-center xl:justify-between;
 }
 
 .main {
@@ -19,5 +19,6 @@
 
 .footer {
     grid-area: footer;
+    @apply p-10 text-center;
 
 }
