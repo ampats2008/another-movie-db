@@ -1,0 +1,23 @@
+.layoutGrid {
+    @apply bg-slate-900;
+    grid-template-areas: 
+        'header header header'
+        'main main footer'
+    ;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.header {
+    grid-area: header;
+    @apply sm:flex justify-between py-9;
+}
+
+.main {
+    grid-area: main;
+    min-height: 100vh;
+}
+
+.footer {
+    grid-area: footer;
+
+}
