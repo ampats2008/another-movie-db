@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
 import * as React from 'react';
 
-import Image from 'next/image'
-import PopularityMeter from '../components/PopularityMeter';
 import PosterCard from '../components/PosterCard';
 
 type Props = {
@@ -23,39 +21,13 @@ type Props = {
 }],
 }
 
-const Home: NextPage<Props> = ({content}) => {  
-  
-  // sample resource
-  const contentResource = {
-    "backdrop_path": "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
-    "first_air_date": "2022-03-24",
-    "genre_ids": [
-        10759,
-        10765
-    ],
-    "id": 52814,
-    "name": "Halo",
-    "origin_country": [
-        "US"
-    ],
-    "original_language": "en",
-    "original_name": "Halo",
-    "overview": "Depicting an epic 26th-century conflict between humanity and an alien threat known as the Covenant, the series weaves deeply drawn personal stories with action, adventure and a richly imagined vision of the future.",
-    "popularity": 6923.782,
-    "poster_path": "/nJUHX3XL1jMkk8honUZnUmudFb9.jpg",
-    "vote_average": 8.9,
-    "vote_count": 275
-  }
-
-  React.useEffect(() => {
-    console.log(content)
-  }, []);
+const Home: NextPage<Props> = ({content}) => {
 
   return (<>
 
       <section className="flex flex-wrap">
 
-        {content.map(show => <PosterCard key={show.id} contentResource={show} /> )}
+        {content.map(contentRes => <PosterCard key={contentRes.id} contentResource={contentRes} /> )}
 
       </section>
       

@@ -21,6 +21,9 @@ a {
 
 .popularityMeter {
   animation: dash 750ms ease forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(-95deg);
 }
 
 @keyframes dash {

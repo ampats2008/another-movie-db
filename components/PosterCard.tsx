@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
-import PopularityMeter from './PopularityMeter'
+import ScoreMeter from './ScoreMeter'
 import { useRouter } from 'next/router'
 
 type Props = {
@@ -26,11 +26,8 @@ const PosterCard: React.FC<Props> = ({contentResource}) => {
     const router = useRouter();
 
     // calculated as the current show's popularity divided by the max popularity of the dataset
-    const popularityStrokeDashOffset = 115 - (Math.floor((contentResource.popularity / 6083.266)*115));
-    const popularityIndex = Math.floor((contentResource.popularity / 6083.266)*100);
-
-    console.log(contentResource.name, contentResource.popularity)
-
+    const popularityStrokeDashOffset = 94 - (Math.floor((contentResource.vote_average / 10)*94));
+    const popularityIndex = Math.floor((contentResource.vote_average / 10)*94);
 
     const goToShowPage : React.MouseEventHandler = (e) => {
         e.preventDefault();
@@ -39,11 +36,11 @@ const PosterCard: React.FC<Props> = ({contentResource}) => {
 
 
     return (
-        <div id='card' className='m-10 bg-sky-900 w-min rounded-lg transition-transform ease-out hover:scale-[1.05] cursor-pointer' onClick={goToShowPage}>
+        <div id='card' className='m-10 w-min rounded-lg transition-transform ease-out hover:scale-[1.05] cursor-pointer' onClick={goToShowPage}>
           <div id='posterCont' className='w-[200px] h-[300px] relative'>
-            <Image className='rounded-lg' layout='fill' objectFit='cover' unoptimized src={`https://image.tmdb.org/t/p/original${contentResource.poster_path}`}/>
+            <Image className='rounded-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${contentResource.poster_path}`} priority/>
 
-            <PopularityMeter popIndex={popularityIndex} popStrokeDashoffset={popularityStrokeDashOffset} />
+            <ScoreMeter popIndex={popularityIndex} popStrokeDashoffset={popularityStrokeDashOffset} />
           </div>
         </div>
     );
