@@ -25,7 +25,7 @@ const Home: NextPage<Props> = ({content}) => {
 
   return (<>
 
-      <section className="flex flex-wrap">
+      <section className="flex flex-wrap justify-center">
 
         {content.map(contentRes => <PosterCard key={contentRes.id} contentResource={contentRes} /> )}
 

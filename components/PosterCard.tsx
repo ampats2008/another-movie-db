@@ -25,10 +25,6 @@ const PosterCard: React.FC<Props> = ({contentResource}) => {
 
     const router = useRouter();
 
-    // calculated as the current show's popularity divided by the max popularity of the dataset
-    const popularityStrokeDashOffset = 94 - (Math.floor((contentResource.vote_average / 10)*94));
-    const popularityIndex = Math.floor((contentResource.vote_average / 10)*94);
-
     const goToShowPage : React.MouseEventHandler = (e) => {
         e.preventDefault();
         router.push(`/shows/${contentResource.id}`);
@@ -40,7 +36,7 @@ const PosterCard: React.FC<Props> = ({contentResource}) => {
           <div id='posterCont' className='w-[200px] h-[300px] relative'>
             <Image className='rounded-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${contentResource.poster_path}`} priority/>
 
-            <ScoreMeter popIndex={popularityIndex} popStrokeDashoffset={popularityStrokeDashOffset} />
+            <ScoreMeter vote_average={contentResource.vote_average} />
           </div>
         </div>
     );
