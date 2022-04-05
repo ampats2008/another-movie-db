@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import PopularityMeter from './PopularityMeter'
+import { useRouter } from 'next/router'
 
 type Props = {
     contentResource : {
@@ -22,12 +23,18 @@ type Props = {
  
 const PosterCard: React.FC<Props> = ({contentResource}) => {
 
-    // calculated as the current show's popularity divided by the max popularity of the dataset
-    const popularityStrokeDashOffset = 115 - Math.floor(5000/contentResource.popularity*115);
-    const popularityIndex = Math.floor(5000/contentResource.popularity*100);
+    const router = useRouter();
 
-    const goToShowPage : React.MouseEventHandler = () => {
-        
+    // calculated as the current show's popularity divided by the max popularity of the dataset
+    const popularityStrokeDashOffset = 115 - (Math.floor((contentResource.popularity / 6083.266)*115));
+    const popularityIndex = Math.floor((contentResource.popularity / 6083.266)*100);
+
+    console.log(contentResource.name, contentResource.popularity)
+
+
+    const goToShowPage : React.MouseEventHandler = (e) => {
+        e.preventDefault();
+        router.push(`/shows/${contentResource.id}`);
     }
 
 
