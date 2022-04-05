@@ -53,12 +53,12 @@ const CastList: React.FC<Props> = ({showID, seasonNum, episodeNum}) => {
     }
 
     return (
-        <div className='mt-10 sm:flex flex-wrap justify-center overflow-x-auto'>
+        <div className='max-w-[1220px] mx-auto mt-10 sm:flex gap-10 flex-nowrap overflow-x-auto'>
 
             {castList.map(actor => 
-                <div key={actor.name} id='actorCard' className='w-[175px] bg-gray-100 rounded-lg m-8'>
+                <div key={actor.name} id='actorCard' className='w-[175px] bg-gray-100 rounded-lg my-4'>
                     {(actor.profile_path) &&
-                    <div id='headshotCont' className='w-full h-[290.5px] relative'>
+                    <div id='headshotCont' className='w-[175px] h-[290.5px] relative'>
                         <Image className='rounded-t-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`} priority/>
                     </div>}
                     <div id="actorDesc" className="p-4">
