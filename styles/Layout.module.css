@@ -1,5 +1,4 @@
 .layoutGrid {
-    @apply bg-gray-200;
     grid-template-areas: 
         'header header header'
         'main main footer'
