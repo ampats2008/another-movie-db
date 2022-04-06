@@ -49,12 +49,6 @@ export enum OriginalLanguage {
 
 const Search: NextPage<Props> = ({page, results, total_results, total_pages, searchTerm}) => {
 
-    React.useEffect(() => {
-    }, []);
-
-    // const firstAirDate = new Date(`${content.first_air_date} 00:00:00`);
-    // const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date
-
     const filteredResults = results.filter(result => (result.media_type !== 'person' && result.poster_path))
 
     return (<>
@@ -68,9 +62,13 @@ const Search: NextPage<Props> = ({page, results, total_results, total_pages, sea
         <div className='lg:max-w-[75vw] lg:mx-auto'>
 
             <section className="mt-10 p-10 xl:p-5">
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Search Results for: {searchTerm}</h2>
+                <h2 className='font-semibold text-2xl mb-6'>We found {filteredResults.length} results for: <span className='capitalize'>{searchTerm}</span></h2><hr className='border-none h-[1px] bg-gray-400'/>
 
-                {filteredResults.map(result => <SearchResult key={`${result.id}-${result.name}`} result={result} />)}
+                {(filteredResults.length > 0) ?
+                filteredResults.map(result => <SearchResult key={`${result.id}-${result.name}`} result={result} />) :
+                <div id='NoResultsFound'>
+                    <p>Sorry, there were no results found for your search. Please try again.</p>
+                </div>}
 
             </section>
 
@@ -95,11 +93,10 @@ export async function getServerSideProps(context:any) {
     const data = await res.json()
 
     // if resource could not be found, return data.results as empty array
-    if (res.status !== 404 && data.results.length !== 0) {
-
-        // console.log( 'RESPONSE: ', data )
-        // console.log( 'SEARCHED: ', searchTerm )
-
+    if (!data) {
+        return {
+          notFound: true,
+        }
     }
 
   // By returning { props: { posts } }, the Blog component
