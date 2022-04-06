@@ -86,7 +86,7 @@ const SearchResult: React.FC<Props> = ({result}) => {
     }
 
     return (
-        <div className='mt-10 max-w-screen-lg flex-nowrap bg-gray-100 rounded sm:flex shadow-sm'>
+        <div className='my-24 max-w-screen-lg flex-nowrap bg-gray-100 rounded sm:flex shadow-sm'>
                     
             {(result.poster_path) &&
             <div onClick={goToResultPage} className={`h-[300px] sm:h-auto sm:w-[200px] relative lg:scale-[1.08] transition-all ease-out hover:scale-[1.05] lg:hover:scale-[1.1] cursor-pointer`}>
@@ -97,7 +97,7 @@ const SearchResult: React.FC<Props> = ({result}) => {
             <div id='ep-listing-info' className='p-3 flex-[1_1_0%] sm:grid lg:p-6 min-h-[300px]' style={{gridTemplateAreas: `'title date' 'desc desc'`}}>
         
                 <p className='text-lg font-bold inline' style={{gridArea: 'title'}}>{ipName}, <i>{mediaType}</i></p>
-                <p className='text-lg sm:text-right' style={{gridArea: 'date'}}>{releaseDate}</p>
+                <p className='text-lg sm:text-right' style={{gridArea: 'date'}}>Released: {releaseDate}</p>
                 <p className='text-lg indent-[4ch] mt-4' style={{gridArea: 'desc'}}>{result.overview}</p>
         
             </div>           

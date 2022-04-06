@@ -149,7 +149,7 @@ const Show: NextPage<Props> = ({content}) => {
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'cast'}}>
                 <h2 className='capitalize font-semibold text-2xl mb-6'>Cast</h2>            
                 <CastList
-                showID={content.id}
+                contentID={content.id}
                 seasonNum={content.last_episode_to_air.season_number}
                 episodeNum={content.last_episode_to_air.episode_number}
                 />

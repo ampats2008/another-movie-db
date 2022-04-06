@@ -2,9 +2,9 @@ import * as React from 'react';
 import Image from 'next/image'
 
 type Props = {
-    showID: number,
-    seasonNum: number,
-    episodeNum: number,
+    contentID: number,
+    seasonNum?: number,
+    episodeNum?: number,
 }
 
 type CastMember = {
@@ -29,20 +29,27 @@ export enum Department {
     Writing = "Writing",
 }
  
-const CastList: React.FC<Props> = ({showID, seasonNum, episodeNum}) => {
+const CastList: React.FC<Props> = ({contentID, seasonNum, episodeNum}) => {
 
     const [castList, setCastList] = React.useState<CastMember[]>([])
 
     React.useEffect(() => {
         // call for cast list
-        getCastList(showID, seasonNum, episodeNum).then(res => {
+        getCastList(contentID, seasonNum, episodeNum).then(res => {
             setCastList(res);
         });
 
     }, []);
 
-    const getCastList = async (tv_id:number, season_number:number, episode_number:number) => {
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${tv_id}/season/${season_number}/episode/${episode_number}/credits?api_key=b266704b1a8e284b85f455fc1050f942&language=en-US`)
+    const getCastList = async (content_id:number, season_number:number|undefined, episode_number:number|undefined) => {
+
+        // default to Movie castlist request URL
+        let castListURL = `https://api.themoviedb.org/3/movie/${content_id}/credits?api_key=b266704b1a8e284b85f455fc1050f942&language=en-US`
+
+        // if we are retrieving a tv show's castlist, change the URL
+        if ((season_number !== undefined && episode_number !== undefined)) castListURL = `https://api.themoviedb.org/3/tv/${content_id}/season/${season_number}/episode/${episode_number}/credits?api_key=b266704b1a8e284b85f455fc1050f942&language=en-US`
+
+        const res = await fetch(castListURL);
         const data = await res.json();
 
         // if resource could not be found, return empty array
