@@ -2,6 +2,7 @@ import * as React from 'react';
 import ScoreMeter from './ScoreMeter';
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import Link from 'next/link';
 
 type Props = {
     result : {
@@ -70,7 +71,7 @@ const SearchResult: React.FC<Props> = ({result}) => {
 
     // differentiate props based on media-type
     const ipName = (result.media_type === 'tv') ? result.name : result.title;
-    const releaseDate = (result.media_type === 'tv') ? result.first_air_date : result.release_date;
+    const releaseDate = (result.media_type === 'tv') ? new Date(`${result.first_air_date} 00:00:00`) : new Date(`${result.release_date} 00:00:00`);
 
     const router = useRouter();
 
@@ -91,13 +92,14 @@ const SearchResult: React.FC<Props> = ({result}) => {
             {(result.poster_path) &&
             <div onClick={goToResultPage} className={`h-[300px] sm:h-auto sm:w-[200px] relative lg:scale-[1.08] transition-all ease-out hover:scale-[1.05] lg:hover:scale-[1.1] cursor-pointer`}>
                 <Image className='rounded-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${result.poster_path}`} priority/>
-                <ScoreMeter vote_average={result.vote_average} />
+                {(result.vote_average) &&
+                <ScoreMeter vote_average={result.vote_average!} />}
             </div>}
         
             <div id='ep-listing-info' className='p-3 flex-[1_1_0%] sm:grid lg:p-6 min-h-[300px]' style={{gridTemplateAreas: `'title date' 'desc desc'`}}>
         
-                <p className='text-lg font-bold inline' style={{gridArea: 'title'}}>{ipName}, <i>{mediaType}</i></p>
-                <p className='text-lg sm:text-right' style={{gridArea: 'date'}}>Released: {releaseDate}</p>
+                <a href='#' onClick={goToResultPage} className='hover:underline'><p className='text-lg font-bold inline' style={{gridArea: 'title'}}>{ipName}, <i>{mediaType}</i></p></a>
+                <p className='text-lg sm:text-right' style={{gridArea: 'date'}}>Released: {releaseDate.toLocaleDateString()}</p>
                 <p className='text-lg indent-[4ch] mt-4' style={{gridArea: 'desc'}}>{result.overview}</p>
         
             </div>           
