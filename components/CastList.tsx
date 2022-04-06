@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Image from 'next/image'
+import { UserIcon } from '@heroicons/react/outline';
 
 type Props = {
     contentID: number,
@@ -32,11 +33,13 @@ export enum Department {
 const CastList: React.FC<Props> = ({contentID, seasonNum, episodeNum}) => {
 
     const [castList, setCastList] = React.useState<CastMember[]>([])
+    const [loaded, setLoaded] = React.useState<boolean>(false)
 
     React.useEffect(() => {
         // call for cast list
         getCastList(contentID, seasonNum, episodeNum).then(res => {
             setCastList(res);
+            setLoaded(true);
         });
 
     }, []);
@@ -60,9 +63,10 @@ const CastList: React.FC<Props> = ({contentID, seasonNum, episodeNum}) => {
     }
 
     return (
-        <div className='w-min sm:w-full mx-auto mt-10 sm:flex sm:gap-10 sm:flex-nowrap sm:overflow-x-auto'>
+        <div className='mx-auto mt-10 max-h-[500px] overflow-y-auto sm:w-full flex flex-wrap gap-10 sm:flex-nowrap sm:overflow-x-auto'>
 
-            {castList.map(actor => 
+            {(loaded) ?
+            castList.map(actor => 
                 <div key={actor.name} id='actorCard' className='w-[175px] bg-gray-100 rounded-lg my-4 shadow-sm'>
                     {(actor.profile_path) &&
                     <div id='headshotCont' className='w-[175px] h-[290.5px] relative'>
@@ -72,7 +76,18 @@ const CastList: React.FC<Props> = ({contentID, seasonNum, episodeNum}) => {
                         <p className='font-semibold'>{actor.name}</p>
                         <p className='italic'>{actor.character}</p>
                     </div>
-                
+                </div>
+            ) :
+            // If component data hasn't loaded yet, display these placeholder cards instead:
+            [0,1,2,3,4,5,6,7,8,9,10].map(actor => 
+                <div key={`actorPlaceHolderCard-${actor}`} id='actorCard' className='w-[175px] bg-gray-100 rounded-lg my-4 shadow-sm'>
+                    <div id='headshotCont' className='w-[175px] h-[290.5px] bg-gray-400 rounded-t-lg'>
+                        <UserIcon className='text-[#949ba6] pt-10 p-5 animate-pulse'/> 
+                    </div>
+                    <div id="actorDesc" className="p-4">
+                        <div id='placeholder_text' className='h-3 w-full bg-[#949ba6] rounded-full animate-pulse'></div>
+                        <div id='placeholder_text' className='h-3 w-[70%] bg-[#949ba6] rounded-full mt-3 animate-pulse'></div>
+                    </div>
                 </div>
             )}           
 
