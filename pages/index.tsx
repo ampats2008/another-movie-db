@@ -23,11 +23,16 @@ type Props = {
 
 const Home: NextPage<Props> = ({content}) => {
 
+  const [cardList, setCardList] = React.useState<typeof content | []>([])
+
+  
+
   return (<>
 
       <section className="flex flex-wrap justify-center">
 
-        {content.map(contentRes => <PosterCard key={contentRes.id} contentResource={contentRes} /> )}
+
+        {content.map(contentRes => <PosterCard key={contentRes.id} contentResource={contentRes} />)}
 
       </section>
       

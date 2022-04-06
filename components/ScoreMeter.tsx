@@ -3,9 +3,9 @@ import * as React from 'react';
 
 type Props = {
     vote_average:   number,
-    pos:            string,    // defaults to abs top-left corner
-    viewPortSize: string,
-    viewBox: string,
+    pos?:            string,    // defaults to abs top-left corner
+    viewPortSize?: string,
+    viewBox?: string,
 }
  
 const ScoreMeter: React.FC<Props> = ({vote_average, viewPortSize='h-[50px] w-[50px]', viewBox="0 0 40 40", pos='absolute top-1 left-1'}) => {
