@@ -1,166 +1,193 @@
-import type { NextPage } from 'next'
-import * as React from 'react';
-import { useRouter } from 'next/router'
-import Image from 'next/image'
-import Head from 'next/head';
-import EpisodeListing from '../../components/EpisodeListing'
-import CastList from '../../components/CastList'
+import type { NextPage } from "next"
+import * as React from "react"
+import { useRouter } from "next/router"
+import Image from "next/image"
+import Head from "next/head"
+import EpisodeListing from "../../components/EpisodeListing"
+import CastList from "../../components/CastList"
 
 type Props = {
-    content: {
-        adult:                boolean;
-        backdrop_path:        string;
-        created_by:           CreatedBy[];
-        episode_run_time:     number[];
-        first_air_date:       string;
-        genres:               Genre[];
-        homepage:             string;
-        id:                   number;
-        in_production:        boolean;
-        languages:            string[];
-        last_air_date:        string;
-        last_episode_to_air:  TEpisodeToAir;
-        name:                 string;
-        next_episode_to_air:  TEpisodeToAir;
-        networks:             Network[];
-        number_of_episodes:   number;
-        number_of_seasons:    number;
-        origin_country:       string[];
-        original_language:    string;
-        original_name:        string;
-        overview:             string;
-        popularity:           number;
-        poster_path:          string;
-        production_companies: Network[];
-        production_countries: ProductionCountry[];
-        seasons:              Season[];
-        spoken_languages:     SpokenLanguage[];
-        status:               string;
-        tagline:              string;
-        type:                 string;
-        vote_average:         number;
-        vote_count:           number;
-        maturityRating:       string;
-    },
+  content: {
+    adult: boolean
+    backdrop_path: string
+    created_by: CreatedBy[]
+    episode_run_time: number[]
+    first_air_date: string
+    genres: Genre[]
+    homepage: string
+    id: number
+    in_production: boolean
+    languages: string[]
+    last_air_date: string
+    last_episode_to_air: TEpisodeToAir
+    name: string
+    next_episode_to_air: TEpisodeToAir
+    networks: Network[]
+    number_of_episodes: number
+    number_of_seasons: number
+    origin_country: string[]
+    original_language: string
+    original_name: string
+    overview: string
+    popularity: number
+    poster_path: string
+    production_companies: Network[]
+    production_countries: ProductionCountry[]
+    seasons: Season[]
+    spoken_languages: SpokenLanguage[]
+    status: string
+    tagline: string
+    type: string
+    vote_average: number
+    vote_count: number
+    maturityRating: string
+  }
 }
 
 export interface CreatedBy {
-    id:           number;
-    credit_id:    string;
-    name:         string;
-    gender:       number;
-    profile_path: null;
+  id: number
+  credit_id: string
+  name: string
+  gender: number
+  profile_path: null
 }
 
 export interface Genre {
-    id:   number;
-    name: string;
+  id: number
+  name: string
 }
 
 export interface TEpisodeToAir {
-    air_date:        string;
-    episode_number:  number;
-    id:              number;
-    name:            string;
-    overview:        string;
-    production_code: string;
-    season_number:   number;
-    still_path:      null | string;
-    vote_average:    number;
-    vote_count:      number;
+  air_date: string
+  episode_number: number
+  id: number
+  name: string
+  overview: string
+  production_code: string
+  season_number: number
+  still_path: null | string
+  vote_average: number
+  vote_count: number
 }
 
 export interface Network {
-    name:           string;
-    id:             number;
-    logo_path:      null | string;
-    origin_country: string;
+  name: string
+  id: number
+  logo_path: null | string
+  origin_country: string
 }
 
 export interface ProductionCountry {
-    iso_3166_1: string;
-    name:       string;
+  iso_3166_1: string
+  name: string
 }
 
 export interface Season {
-    air_date:      string;
-    episode_count: number;
-    id:            number;
-    name:          string;
-    overview:      string;
-    poster_path:   null | string;
-    season_number: number;
+  air_date: string
+  episode_count: number
+  id: number
+  name: string
+  overview: string
+  poster_path: null | string
+  season_number: number
 }
 
 export interface SpokenLanguage {
-    english_name: string;
-    iso_639_1:    string;
-    name:         string;
+  english_name: string
+  iso_639_1: string
+  name: string
 }
 
-type className = string; // allows tailwind to provide intelisense on classlist string
+type className = string // allows tailwind to provide intelisense on classlist string
 
-const Show: NextPage<Props> = ({content}) => {
+const Show: NextPage<Props> = ({ content }) => {
+  React.useEffect(() => {}, [])
 
-    React.useEffect(() => {
-    }, []);
+  const firstAirDate = new Date(`${content.first_air_date} 00:00:00`)
+  // const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date
 
-    const firstAirDate = new Date(`${content.first_air_date} 00:00:00`);
-    // const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date
+  const pageContentH2: className =
+    "capitalize font-semibold text-2xl mb-6 dark:text-gray-200"
 
-    const pageContentH2 : className = 'capitalize font-semibold text-2xl mb-6 dark:text-gray-200';
+  return (
+    <>
+      <Head>
+        <title>
+          AMDb | {content.name} ({firstAirDate.getFullYear()})
+        </title>
+        <meta name="description" content="Generated by create next app" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-    return (<>
+      {/* SHOW TITLE / DESC RIBBON */}
+      <section className="h-[250px] relative bg-slate-900">
+        <Image
+          className="opacity-50 pointer-events-none select-none"
+          layout="fill"
+          objectFit="cover"
+          priority
+          src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
+        />
 
-        <Head>
-            <title>AMDb | {content.name} ({firstAirDate.getFullYear()})</title>
-            <meta name="description" content="Generated by create next app" />
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
+        <div id="headInfo" className="text-left absolute abs-center">
+          <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
+            {content.name}{" "}
+            <span className="opacity-60">({firstAirDate.getFullYear()})</span>
+          </h1>
+          <h1 className="text-2xl italic text-gray-200 font-normal py-3">
+            {content.tagline}
+          </h1>
 
-        {/* SHOW TITLE / DESC RIBBON */}
-        <section className="h-[250px] relative bg-slate-900">
-            <Image className='opacity-50 pointer-events-none select-none' layout='fill' objectFit='cover' priority src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}/>
+          <div className="py-3 max-w-[55ch] leading-8">
+            <p
+              id="maturityRating"
+              className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
+            >
+              {content.maturityRating}
+            </p>
+            <p className="ml-3 inline text-lg text-gray-200">
+              {" "}
+              {content.genres.map((genre) => (
+                <span
+                  className="after:content-['_/_'] last:after:content-['']"
+                  key={`${genre.id}-${genre.name}`}
+                >
+                  {genre.name}
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
+      </section>
 
-            <div id='headInfo' className='text-left absolute abs-center'>
-
-                <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
-                    {content.name} <span className='opacity-60'>({firstAirDate.getFullYear()})</span></h1>
-                <h1 className="text-2xl italic text-gray-200 font-normal py-3">{content.tagline}</h1>
-
-                <div className='py-3 max-w-[55ch] leading-8'>
-                    <p id='maturityRating' className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80">{content.maturityRating}</p>
-                    <p className='ml-3 inline text-lg text-gray-200'> {content.genres.map(genre => <span className="after:content-['_/_'] last:after:content-['']" key={`${genre.id}-${genre.name}`}>{genre.name}</span>)}</p>
-                </div>
-
-            </div>
+      {/* SHOW PAGE CONTENT */}
+      <div
+        className="xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]"
+        style={{ gridTemplateAreas: `'oview lastEp' 'cast cast'` }}
+      >
+        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "oview" }}>
+          <h2 className={pageContentH2}>Overview</h2>
+          <p className="max-w-screen-lg indent-[4ch] mt-10 text-lg leading-loose">
+            {content.overview}
+          </p>
         </section>
 
-        {/* SHOW PAGE CONTENT */}
-        <div className='xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]' style={{gridTemplateAreas: `'oview lastEp' 'cast cast'`}}>
-            <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'oview'}}>
-                <h2 className={pageContentH2}>Overview</h2>            
-                <p className='max-w-screen-lg indent-[4ch] mt-10 text-lg leading-loose'>{content.overview}</p>
-            </section>
+        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "lastEp" }}>
+          <h2 className={pageContentH2}>Last Episode</h2>
+          <EpisodeListing episode={content.last_episode_to_air} />
+        </section>
 
-            <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'lastEp'}}>
-                <h2 className={pageContentH2}>Last Episode</h2>
-                <EpisodeListing episode={content.last_episode_to_air}/>
-            </section>
-
-            <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'cast'}}>
-                <h2 className={pageContentH2}>Cast</h2>            
-                <CastList
-                contentID={content.id}
-                seasonNum={content.last_episode_to_air.season_number}
-                episodeNum={content.last_episode_to_air.episode_number}
-                />
-            </section>
-
-        </div>
-        
-
-    </>)
+        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "cast" }}>
+          <h2 className={pageContentH2}>Cast</h2>
+          <CastList
+            contentID={content.id}
+            seasonNum={content.last_episode_to_air.season_number}
+            episodeNum={content.last_episode_to_air.episode_number}
+          />
+        </section>
+      </div>
+    </>
+  )
 }
 
 export default Show
@@ -168,45 +195,55 @@ export default Show
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
 // direct database queries.
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/${context.params.id}?api_key=${process.env.API_KEY}&language=en-US`
+  )
+  const data = await res.json()
 
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
-    const res = await fetch(`https://api.themoviedb.org/3/tv/${context.params.id}?api_key=${process.env.API_KEY}&language=en-US`)
-    const data = await res.json()
-
-    // if resource could not be found, return data.results as empty array
-    if (!data) {
-        return {
-          notFound: true,
-        }
+  // if resource could not be found, return data.results as empty array
+  if (!data) {
+    return {
+      notFound: true,
     }
+  }
 
-    // fetch maturity rating (TV-14, TV-MA, etc.)
-    const res2 = await fetch(`https://api.themoviedb.org/3/tv/${context.params.id}/content_ratings?api_key=${process.env.API_KEY}&language=en-US`);
+  // fetch maturity rating (TV-14, TV-MA, etc.)
+  const res2 = await fetch(
+    `https://api.themoviedb.org/3/tv/${context.params.id}/content_ratings?api_key=${process.env.API_KEY}&language=en-US`
+  )
 
-    const data2:any = await res2.json();
+  const data2: any = await res2.json()
 
-    let maturityRating = 'NR';
+  let maturityRating = "NR"
 
-    // if resource could not be found, leave response as 'NR' (Not Rated)
-    if (res2.status !== 404 && data2.results.length !== 0) {
-    
-        const maturityRatings : { results: [{ iso_3166_1: string, rating: string }], id: number } = data2;
+  // if resource could not be found, leave response as 'NR' (Not Rated)
+  if (res2.status !== 404 && data2.results.length !== 0) {
+    const maturityRatings: {
+      results: [{ iso_3166_1: string; rating: string }]
+      id: number
+    } = data2
 
-        // get US rating string if it exists, otherwise just use the first object to retrieve it
-        let ratingUSorUndefined = maturityRatings.results.find(el => (el.iso_3166_1 === 'US'));
+    // get US rating string if it exists, otherwise just use the first object to retrieve it
+    let ratingUSorUndefined = maturityRatings.results.find(
+      (el) => el.iso_3166_1 === "US"
+    )
 
-        // console.log( 'RESPONSE: ', data )
+    // console.log( 'RESPONSE: ', data )
 
-        maturityRating = (ratingUSorUndefined === undefined) ? maturityRatings.results[0].rating : ratingUSorUndefined.rating;
-    }
+    maturityRating =
+      ratingUSorUndefined === undefined
+        ? maturityRatings.results[0].rating
+        : ratingUSorUndefined.rating
+  }
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      content: {...data, maturityRating},
+      content: { ...data, maturityRating },
       // only return rating string from rating object
     },
   }
