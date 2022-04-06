@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Head from 'next/head';
-import EpisodeListing from '../../components/EpisodeListing'
+import ScoreMeter from '../../components/ScoreMeter'
 import CastList from '../../components/CastList'
 
 type Props = {
@@ -59,12 +59,17 @@ export interface SpokenLanguage {
     name:      string;
 }
 
+type className = string; // allows tailwind to provide intelisense on classlist string
+
 const Movie: NextPage<Props> = ({content}) => {
 
     React.useEffect(() => {
+        console.log(content)
     }, []);
 
     const releaseDate = new Date(`${content.release_date} 00:00:00`);
+
+    const pageContentH2 : className = 'capitalize font-semibold text-2xl mb-6 dark:text-gray-200';
 
     return (<>
 
@@ -74,7 +79,7 @@ const Movie: NextPage<Props> = ({content}) => {
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
-    
+        {/* MOVIE TITLE / DESC RIBBON */}
         <section className="h-[250px] relative bg-slate-900">
             <Image className='opacity-50 pointer-events-none select-none' layout='fill' objectFit='cover' priority src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}/>
 
@@ -85,28 +90,30 @@ const Movie: NextPage<Props> = ({content}) => {
                 <h1 className="text-2xl italic text-gray-200 font-normal py-3">{content.tagline}</h1>
 
                 <div className='py-3 max-w-[55ch] leading-8'>
-                    <p id='maturityRating' className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80">{content.maturityRating}</p>
+                    <ScoreMeter vote_average={content.vote_average} viewPortSize='h-[60px] w-[60px]' viewBox="5 0 40 40" pos={'inline-block'}/>
+                    {content.maturityRating && content.maturityRating !== '' &&
+                    <p id='maturityRating' className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80">{content.maturityRating}</p>}
                     <p className='ml-3 inline text-lg text-gray-200'> {content.genres.map(genre => <span className="after:content-['_/_'] last:after:content-['']" key={`${genre.id}-${genre.name}`}>{genre.name}</span>)}</p>
                 </div>
-
             </div>
         </section>
 
+        {/* MOVIE PAGE CONTENT */}
         <div className='xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]' style={{gridTemplateAreas: `'oview oview' 'cast cast'`}}>
 
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'oview'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Overview</h2>            
+                <h2 className={pageContentH2}>Overview</h2>            
                 <p className='indent-[4ch] mt-10 text-lg leading-loose'>{content.overview}</p>
             </section>
 
             {/* <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'lastEp'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Last Episode</h2>
+                <h2 className={pageContentH2}>Last Episode</h2>
                 <EpisodeListing episode={content.last_episode_to_air}/>
             </section>
             */}
 
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'cast'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Cast</h2>            
+                <h2 className={pageContentH2}>Cast</h2>            
                 <CastList contentID={content.id} />
             </section>
 

@@ -65,7 +65,6 @@ export enum OriginalLanguage {
  
 const SearchResult: React.FC<Props> = ({result}) => {
 
-    console.log(result)
     // capitalize Movie and uppercase TV
     const mediaType = (result.media_type === 'tv') ? 'TV' : 'Movie';
 
@@ -87,7 +86,7 @@ const SearchResult: React.FC<Props> = ({result}) => {
     }
 
     return (
-        <div className='my-24 max-w-screen-lg flex-nowrap bg-gray-100 rounded sm:flex shadow-sm'>
+        <div className='my-24 max-w-screen-lg flex-nowrap bg-gray-100 dark:bg-slate-700 rounded sm:flex drop-shadow-sm'>
                     
             {(result.poster_path) &&
             <div onClick={goToResultPage} className={`h-[300px] sm:h-auto sm:w-[200px] relative lg:scale-[1.08] transition-all ease-out hover:scale-[1.05] lg:hover:scale-[1.1] cursor-pointer`}>

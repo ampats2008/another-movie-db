@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRef } from 'react';
 import Head from 'next/head'
-import styles from '../styles/Layout.module.css'
+// import styles from '../styles/Layout.module.css'
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 
@@ -31,6 +31,10 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
         router.push(`/search/${searchTerm}`);
     }
 
+    React.useEffect(() => {
+        document.getElementsByTagName('html')[0].classList.add('dark');
+    }, []);
+
     return (
         <>
         <Head>
@@ -39,12 +43,12 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <div id={'layoutGrid'} className={''}>
-            <header className={'bg-gray-200 flex flex-wrap justify-center xl:justify-between'}>
+            <header className={'bg-gray-200 dark:bg-slate-900 dark:text-gray-200 flex flex-wrap justify-center xl:justify-between'}>
                 <div id='logoCont'>
                     <Link href='/'>
                         <a className='px-10 my-10 flex items-center justify-center transition-opacity hover:opacity-80'>
                             <h1 className="text-5xl font-bold">Another Movie DB</h1>
-                            <DatabaseIcon className={'inline ml-3 h-14 w-14 text-indigo-900'} />
+                            <DatabaseIcon className={'inline ml-3 h-14 w-14 text-indigo-900 dark:text-indigo-400'} />
                         </a>
                     </Link>
                 </div>
@@ -55,15 +59,15 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
                     <NavLink name="People"/>
                     <NavLink name="Genres"/>
                     
-                    <div className='group sm:min-w-[7rem] px-1 m-auto rounded-full bg-gray-300'>
+                    <div className='group sm:min-w-[7rem] px-1 m-auto rounded-full bg-gray-300 dark:bg-slate-700'>
                         <form onSubmit={handleSearch} className='flex h-7 items-center'>
                             <input 
                             onChange={e => setSearchTerm(e.target.value)}
                             value={searchTerm}
                             ref={searchInputRef} 
                             type={'text'} 
-                            className='h-full w-[85%] pl-2 justify-self-start rounded-full border-none focus:outline-none bg-gray-300' placeholder='Find a movie or show...'/>
-                            <a href='#' onClick={handleSearch} className='mx-auto'><SearchIcon className={"h-5 w-5 text-indigo-600 transition-colors hover:text-indigo-400"} /></a>
+                            className='h-full w-[85%] pl-2 justify-self-start rounded-full border-none focus:outline-none bg-gray-300 dark:bg-slate-700' placeholder='Find a movie or show...'/>
+                            <a href='#' onClick={handleSearch} className='mx-auto'><SearchIcon className={"h-5 w-5 text-indigo-600 dark:text-indigo-400 transition-colors hover:text-indigo-400"} /></a>
                         </form>
                     </div>
 
@@ -72,7 +76,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
             <main className={'min-h-[100vh]'}>
                 {children}
             </main>
-            <footer className={'bg-gray-200 p-10 text-center mt-10'}>
+            <footer className={'bg-gray-200 dark:bg-slate-900 p-10 text-center mt-10'}>
                 Copyright &#169; 2022 Anthony Medugno.
             </footer>
         </div>
@@ -97,7 +101,7 @@ const NavLink: React.FC<NavLinkProps> = ({name}) => {
     if (name === 'Home') link = '/';
     if (name === 'Search') link = '#';
 
-    const iconClass : className = "inline h-6 w-6 text-indigo-600 translate-x-10 rotate-0 transition-transform ease-in-out duration-500 group-hover:translate-x-0 group-hover:rotate-[360deg] relative z-[1]";
+    const iconClass : className = "inline h-6 w-6 text-indigo-600 dark:text-indigo-400 translate-x-10 rotate-0 transition-transform ease-in-out duration-500 group-hover:translate-x-0 group-hover:rotate-[360deg] relative z-[1]";
 
     const iconMap : {[name: string]: JSX.Element} = {
         'Home' :  <HomeIcon className={iconClass} />,

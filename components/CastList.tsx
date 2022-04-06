@@ -67,7 +67,7 @@ const CastList: React.FC<Props> = ({contentID, seasonNum, episodeNum}) => {
 
             {(loaded) ?
             castList.map(actor => 
-                <div key={actor.name} id='actorCard' className='w-[175px] bg-gray-100 rounded-lg my-4 shadow-sm'>
+                <div key={actor.name} id='actorCard' className='w-[175px] bg-gray-100 dark:bg-slate-700 rounded-lg my-4 shadow-sm'>
                     {(actor.profile_path) &&
                     <div id='headshotCont' className='w-[175px] h-[290.5px] relative'>
                         <Image className='rounded-t-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`} priority/>

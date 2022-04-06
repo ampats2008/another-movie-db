@@ -98,14 +98,17 @@ export interface SpokenLanguage {
     name:         string;
 }
 
+type className = string; // allows tailwind to provide intelisense on classlist string
+
 const Show: NextPage<Props> = ({content}) => {
 
     React.useEffect(() => {
     }, []);
 
     const firstAirDate = new Date(`${content.first_air_date} 00:00:00`);
-    const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date
+    // const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date
 
+    const pageContentH2 : className = 'capitalize font-semibold text-2xl mb-6 dark:text-gray-200';
 
     return (<>
 
@@ -115,7 +118,7 @@ const Show: NextPage<Props> = ({content}) => {
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
-    
+        {/* SHOW TITLE / DESC RIBBON */}
         <section className="h-[250px] relative bg-slate-900">
             <Image className='opacity-50 pointer-events-none select-none' layout='fill' objectFit='cover' priority src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}/>
 
@@ -133,21 +136,20 @@ const Show: NextPage<Props> = ({content}) => {
             </div>
         </section>
 
+        {/* SHOW PAGE CONTENT */}
         <div className='xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]' style={{gridTemplateAreas: `'oview lastEp' 'cast cast'`}}>
-
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'oview'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Overview</h2>            
+                <h2 className={pageContentH2}>Overview</h2>            
                 <p className='max-w-screen-lg indent-[4ch] mt-10 text-lg leading-loose'>{content.overview}</p>
             </section>
 
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'lastEp'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Last Episode</h2>
-                {/* Episode List Item Component */}
+                <h2 className={pageContentH2}>Last Episode</h2>
                 <EpisodeListing episode={content.last_episode_to_air}/>
             </section>
 
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'cast'}}>
-                <h2 className='capitalize font-semibold text-2xl mb-6'>Cast</h2>            
+                <h2 className={pageContentH2}>Cast</h2>            
                 <CastList
                 contentID={content.id}
                 seasonNum={content.last_episode_to_air.season_number}
