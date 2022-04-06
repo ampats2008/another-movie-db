@@ -26,7 +26,8 @@ const EpisodeListing: React.FC<Props> = ({episode}) => {
             {(episode.still_path) &&
             <div className={`h-[140px] sm:h-auto sm:w-[280px] relative lg:scale-[1.08]`}>
                 <Image className='rounded-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${episode.still_path}`} priority/>
-                <ScoreMeter vote_average={episode.vote_average} />
+                {(episode.vote_average) &&
+                <ScoreMeter vote_average={episode.vote_average!} />}
             </div>}
         
             <div id='ep-listing-info' className='p-3 flex-[1_1_0%] sm:grid lg:p-6' style={{gridTemplateAreas: `'title date' 'desc desc'`}}>
