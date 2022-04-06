@@ -35,3 +35,25 @@ a {
 .abs-center {
   @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
+
+/* Scrollbar styles - Simple style from  https://codepen.io/aurer/pen/kGRNVw?editors=1100 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+  }
+  ::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+  }
+  ::-webkit-scrollbar-thumb:hover{
+  	background: rgba(0,0,0,0.4);
+  }
+  ::-webkit-scrollbar-thumb:active{
+  	background: rgba(0,0,0,.9);
+  }
+
+  
