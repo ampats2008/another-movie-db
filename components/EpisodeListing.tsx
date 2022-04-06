@@ -21,7 +21,7 @@ const EpisodeListing: React.FC<Props> = ({episode}) => {
 
 
     return (
-        <div className='mt-10 max-w-screen-lg flex-nowrap bg-gray-100 rounded-lg sm:flex'>
+        <div className='mt-10 max-w-screen-lg flex-nowrap bg-gray-100 rounded sm:flex shadow-sm'>
                     
             {(episode.still_path) &&
             <div className={`h-[140px] sm:h-auto sm:w-[280px] relative lg:scale-[1.08]`}>

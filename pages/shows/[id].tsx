@@ -133,7 +133,7 @@ const Show: NextPage<Props> = ({content}) => {
             </div>
         </section>
 
-        <div className='xl:grid lg:max-w-[75%] lg:mx-auto grid-y-5' style={{gridTemplateAreas: `'.. oview lastEp ..' '.. cast cast ..'`}}>
+        <div className='xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]' style={{gridTemplateAreas: `'oview lastEp' 'cast cast'`}}>
 
             <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'oview'}}>
                 <h2 className='capitalize font-semibold text-2xl mb-6'>Overview</h2>            

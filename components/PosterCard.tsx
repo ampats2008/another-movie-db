@@ -32,7 +32,7 @@ const PosterCard: React.FC<Props> = ({contentResource}) => {
 
 
     return (
-        <div id='card' className='m-10 w-min rounded-lg transition-transform ease-out hover:scale-[1.05] cursor-pointer' onClick={goToShowPage}>
+        <div id='card' className='m-10 w-min rounded-lg transition-all ease-out hover:scale-[1.05] cursor-pointer drop-shadow-md hover:drop-shadow-2xl will-change-[filter]' onClick={goToShowPage}>
           <div id='posterCont' className='w-[200px] h-[300px] relative'>
             <Image className='rounded-lg' layout='fill' objectFit='cover' src={`https://image.tmdb.org/t/p/w500${contentResource.poster_path}`} priority/>
 
