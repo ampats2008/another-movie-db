@@ -62,9 +62,9 @@ export interface SpokenLanguage {
 type className = string // allows tailwind to provide intelisense on classlist string
 
 const Movie: NextPage<Props> = ({ content }) => {
-  React.useEffect(() => {
-    console.log(content)
-  }, [])
+  // React.useEffect(() => {
+  //   console.log(content)
+  // }, [])
 
   const releaseDate = new Date(`${content.release_date} 00:00:00`)
 
