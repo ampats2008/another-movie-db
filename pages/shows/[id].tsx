@@ -127,6 +127,7 @@ const Show: NextPage<Props> = ({ content }) => {
           objectFit="cover"
           priority
           src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
+          alt=''
         />
 
         <div id="headInfo" className="text-left absolute abs-center">

@@ -85,6 +85,7 @@ const CastList: React.FC<Props> = ({ contentID, seasonNum, episodeNum }) => {
                     layout="fill"
                     objectFit="cover"
                     src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                    alt={actor.name}
                     priority
                   />
                 </div>

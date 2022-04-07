@@ -60,8 +60,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
           <nav className="sm:w-full my-2 max-w-screen-lg sm:flex flex-wrap">
             <NavLink name="Home" />
-            <NavLink name="Movies" />
             <NavLink name="TV" />
+            <NavLink name="Movies" />
             <NavLink name="People" />
             <NavLink name="Genres" />
 

@@ -29,6 +29,7 @@ const EpisodeListing: React.FC<Props> = ({ episode }) => {
             layout="fill"
             objectFit="cover"
             src={`https://image.tmdb.org/t/p/w500${episode.still_path}`}
+            alt={episode.name}
             priority
           />
           {episode.vote_average && (

@@ -98,6 +98,7 @@ const SearchResult: React.FC<Props> = ({ result }) => {
             layout="fill"
             objectFit="cover"
             src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+            alt={result.name}
             priority
           />
           {result.vote_average && (
