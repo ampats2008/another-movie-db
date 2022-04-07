@@ -112,6 +112,7 @@ const NavLink: React.FC<NavLinkProps> = ({ name }) => {
   // href for special cases
   if (name === "Home") link = "/"
   if (name === "Search") link = "#"
+  if (name === "TV") link = "/shows"
 
   const iconClass: className =
     "inline h-6 w-6 text-indigo-600 dark:text-indigo-400 translate-x-10 rotate-0 transition-transform ease-in-out duration-500 group-hover:translate-x-0 group-hover:rotate-[360deg] relative z-[1]"

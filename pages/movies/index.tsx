@@ -2,8 +2,8 @@ import type { NextPage } from "next"
 import * as React from "react"
 import { useRef, useEffect, useState } from "react"
 
-import Page from "../components/Page"
-import Pagination from "../components/Pagination"
+import Page from "../../components/Page"
+import Pagination from "../../components/Pagination"
 
 type Props = {
   initialContent: {
@@ -30,30 +30,19 @@ export interface Result {
   vote_count: number
 }
 
-type useGetTVShowsObj = {
-  data: {
-    page: number
-    results: Result[]
-    total_pages: number
-    total_results: number
-  }
-  isLoading: boolean
-  isError: boolean
-}
-
-const Home: NextPage<Props> = ({ initialContent }) => {
+const Movie: NextPage<Props> = ({ initialContent }) => {
   // hooks
   const [pageIndex, setPageIndex] = useState<number>(1)
   
   return (
     <>
-      <Page mediaType="tv" {...{ pageIndex, setPageIndex, initialContent}} />
+      <Page mediaType="movie" {...{ pageIndex, setPageIndex, initialContent}} />
       <Pagination {...{ pageIndex, setPageIndex }} />
     </>
   )
 }
 
-export default Home
+export default Movie
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
