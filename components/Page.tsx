@@ -130,7 +130,7 @@ const Page: React.FC<Props> = ({
         {!isLoading &&
           !isError &&
           data.results.map((contentRes) => (
-            <PosterCard key={contentRes.id} contentResource={contentRes} />
+            <PosterCard key={contentRes.id} contentResource={contentRes} mediaType={mediaType} />
           ))}
       </section>
     </>
