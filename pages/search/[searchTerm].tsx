@@ -71,7 +71,7 @@ const Search: NextPage<Props> = ({
             We found {filteredResults.length} results for:{" "}
             <span className="capitalize">{searchTerm}</span>
           </h2>
-          <hr className="border-none h-[1px] bg-gray-400" />
+          <hr className="border-none h-[1px] bg-gray-400 dark:bg-gray-600" />
 
           {filteredResults.length > 0 ? (
             filteredResults.map((result) => (

@@ -1,5 +1,9 @@
 import type { NextPage } from "next"
 import * as React from "react"
+import { useRef, useEffect, useState } from "react"
+
+import { Spinner } from "../components/Spinner"
+import { PageError } from "../components/PageError"
 
 import Pagination from "../components/Pagination"
 import PosterCard from "../components/PosterCard"
@@ -43,15 +47,71 @@ type useGetTVShowsObj = {
 
 const Home: NextPage<Props> = ({ initialContent }) => {
   // hooks
-  const [pageIndex, setPageIndex] = React.useState<number>(1)
+  const [pageIndex, setPageIndex] = useState<number>(1)
+  const [sortBy, setSortBy] = useState<string>("popularity")
+  const [sortDirection, setSortDirection] = useState<string>(".desc")
   const { data, isLoading, isError }: useGetTVShowsObj = useGetTVShows({
     pageIndex,
+    sortBy: `${sortBy}${sortDirection}`,
     initialData: { initialContent },
   })
+
+  const orderByArrowRef = useRef<SVGSVGElement | null>(null)
+
+  const btnDirClass = (sortDirection === '.desc') ? 'rotate-0' : 'rotate-180'
+
+  // error state
+  if (isError) return <PageError error={isError} />
+
+  // loading state
+  if (isLoading) return <Spinner />  
 
   // page without errors
   return (
     <>
+      {/* HEAD SECTION */}
+      <div className="mx-auto w-[90%]">
+        <h1 className="my-7 font-semibold text-3xl">TV Shows</h1>
+        <section className="my-7 lg:flex lg:justify-between">
+          <h2 className="font-semibold text-2xl">
+            Discover what's popular right now:
+          </h2>
+          {/* Order By control */}
+          <label>
+            Order by:
+            <svg
+              ref={orderByArrowRef}
+              onClick={() => {
+                setSortDirection(prevSortDir => (prevSortDir === '.desc') ? '.asc' : '.desc'); // toggle b/w ascending or descending
+                setPageIndex(1) // reset to first page
+              }}
+              className={`h-8 w-8 inline-block mx-[15px] h-8 w-8 dark:text-indigo-400 dark:hover:text-indigo-300 text-indigo-600 hover:text-indigo-400 cursor-pointer transition-all ${btnDirClass}`}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <select
+              className="pagination-select dark:bg-slate-900 p-2 mt-7 lg:mt-auto"
+              value={sortBy}
+              onChange={(e) => {
+                setSortBy(e.target.value)
+                setPageIndex(1)
+              }}
+            >
+              <option value={`popularity`}>Popularity</option>
+              <option value={`vote_average`}>Average User Score</option>
+              <option value={`first_air_date`}>First Air Date</option>
+            </select>
+          </label>
+        </section>
+        <hr className="border-none h-[1px] bg-gray-400 dark:bg-gray-600" />
+      </div>
+      {/* CARD CONTAINER */}
       <section className="flex flex-wrap justify-center">
         {!isLoading &&
           !isError &&
@@ -59,7 +119,7 @@ const Home: NextPage<Props> = ({ initialContent }) => {
             <PosterCard key={contentRes.id} contentResource={contentRes} />
           ))}
       </section>
-      <Pagination {...{pageIndex, setPageIndex}} />
+      <Pagination {...{ pageIndex, setPageIndex }} />
     </>
   )
 }

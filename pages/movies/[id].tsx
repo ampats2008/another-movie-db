@@ -82,7 +82,7 @@ const Movie: NextPage<Props> = ({ content }) => {
       </Head>
 
       {/* MOVIE TITLE / DESC RIBBON */}
-      <section className="h-[250px] relative bg-slate-900">
+      <section className="h-[250px] relative bg-slate-900 dark:bg-slate-700">
         <Image
           className="opacity-50 pointer-events-none select-none"
           layout="fill"

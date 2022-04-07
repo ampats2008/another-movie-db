@@ -1,6 +1,5 @@
 import * as React from "react"
-import Image from "next/image"
-import { UserIcon } from "@heroicons/react/outline"
+import { ArrowCircleRightIcon, ArrowCircleLeftIcon } from '@heroicons/react/solid'
 
 type Props = {
   pageIndex: number
@@ -8,7 +7,7 @@ type Props = {
 }
 
 const Pagination: React.FC<Props> = ({ pageIndex, setPageIndex }) => {
-  const btnClass = "px-5 py-2 text-3xl bg-indigo-600 dark:bg-indigo-400 rounded-xl"
+  const btnClass = "transition-colors text-indigo-600 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300"
 
   const handlePageChange = (direction: string) => {
     if (direction === "prev") {
@@ -24,11 +23,11 @@ const Pagination: React.FC<Props> = ({ pageIndex, setPageIndex }) => {
       <div id="pagination" className="flex flex-nowrap gap-5 justify-center">
         {/* for setPageIndex, if the current page is 1, keep it the same*/}
         <button onClick={() => handlePageChange("prev")} className={btnClass}>
-          &larr;
+          <ArrowCircleLeftIcon className="h-10 w-10"/>
         </button>
-        <p className="p-2">{pageIndex}</p>
+        <span className="p-2 text-xl text-indigo-600 dark:text-indigo-300">{pageIndex}</span>
         <button onClick={() => handlePageChange("next")} className={btnClass}>
-          &rarr;
+          <ArrowCircleRightIcon className="h-10 w-10"/>
         </button>
       </div>
     </>

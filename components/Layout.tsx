@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   React.useEffect(() => {
-    document.getElementsByTagName("html")[0].classList.add("dark")
+    document.getElementsByTagName("html")[0].classList.add("dark") // for dev purposes
   }, [])
 
   return (
@@ -65,7 +65,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <NavLink name="People" />
             <NavLink name="Genres" />
 
-            <div className="group sm:min-w-[7rem] px-1 m-auto rounded-full bg-gray-300 dark:bg-slate-700">
+            <div className="group sm:min-w-[7rem] px-1 m-auto rounded-full bg-gray-300 dark:bg-slate-700 drop-shadow-sm">
               <form onSubmit={handleSearch} className="flex h-7 items-center">
                 <input
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -78,7 +78,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <a href="#" onClick={handleSearch} className="mx-auto">
                   <SearchIcon
                     className={
-                      "h-5 w-5 text-indigo-600 dark:text-indigo-400 transition-colors hover:text-indigo-400"
+                      "h-5 w-5 transition-colors text-indigo-600 hover:text-indigo-400  dark:text-indigo-400 dark:hover:text-indigo-300"
                     }
                   />
                 </a>
