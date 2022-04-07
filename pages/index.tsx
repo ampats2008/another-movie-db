@@ -53,18 +53,18 @@ const Home: NextPage<Props> = ({ initialContent }) => {
   const { data, isLoading, isError }: useGetTVShowsObj = useGetTVShows({
     pageIndex,
     sortBy: `${sortBy}${sortDirection}`,
-    initialData: { initialContent },
+    fallbackData: initialContent,
   })
 
   const orderByArrowRef = useRef<SVGSVGElement | null>(null)
 
-  const btnDirClass = (sortDirection === '.desc') ? 'rotate-0' : 'rotate-180'
+  const btnDirClass = sortDirection === ".desc" ? "rotate-0" : "rotate-180"
 
   // error state
   if (isError) return <PageError error={isError} />
 
   // loading state
-  if (isLoading) return <Spinner />  
+  if (isLoading) return <Spinner />
 
   // page without errors
   return (
@@ -74,7 +74,7 @@ const Home: NextPage<Props> = ({ initialContent }) => {
         <h1 className="my-7 font-semibold text-3xl">TV Shows</h1>
         <section className="my-7 lg:flex lg:justify-between">
           <h2 className="font-semibold text-2xl">
-            Discover what's popular right now:
+            Find something bingeworthy:
           </h2>
           {/* Order By control */}
           <label>
@@ -82,7 +82,9 @@ const Home: NextPage<Props> = ({ initialContent }) => {
             <svg
               ref={orderByArrowRef}
               onClick={() => {
-                setSortDirection(prevSortDir => (prevSortDir === '.desc') ? '.asc' : '.desc'); // toggle b/w ascending or descending
+                setSortDirection((prevSortDir) =>
+                  prevSortDir === ".desc" ? ".asc" : ".desc"
+                ) // toggle b/w ascending or descending
                 setPageIndex(1) // reset to first page
               }}
               className={`h-8 w-8 inline-block mx-[15px] h-8 w-8 dark:text-indigo-400 dark:hover:text-indigo-300 text-indigo-600 hover:text-indigo-400 cursor-pointer transition-all ${btnDirClass}`}
