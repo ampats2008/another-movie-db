@@ -2,12 +2,12 @@ import type { NextPage } from "next"
 import Image from "next/image"
 import * as React from "react"
 
-
 import useMovieTVSearch from "../hooks/useMovieTVSearch"
 
 import Page from "../components/Page"
 
-import {SearchIcon} from '@heroicons/react/solid'
+import { SearchIcon } from "@heroicons/react/solid"
+import useFunctionOnTimer from "../hooks/useFunctionOnTimer"
 
 type Props = {
   initialContentTV: {
@@ -15,7 +15,7 @@ type Props = {
     results: tvResult[]
     total_pages: number
     total_results: number
-  },
+  }
   initialContentMovies: {
     page: number
     results: tvResult[]
@@ -43,8 +43,27 @@ export interface tvResult {
 }
 
 const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
-  
-  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] = useMovieTVSearch();
+  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] =
+    useMovieTVSearch()
+
+  const [currBackdropIndex, setCurrBackdropIndex] = React.useState<number>(0)
+
+  const backdropMap: { [str: string]: string } = {
+    Halo: "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
+    MoonKnight: "/64a8imymtJ4WOzIeyUHLtZnJ3wv.jpg",
+    PeakyBlinders: "/wiE9doxiLwq3WCGamDIOb2PqBqc.jpg",
+    TheFlash: "/41yaWnIT8AjIHiULHtTbKNzZTjc.jpg",
+    TheWalkingDead: "/wvdWb5kTQipdMDqCclC6Y3zr4j3.jpg",
+  }
+
+  const backdropKeys = Object.keys(backdropMap);
+
+  // Custom hook:
+  // Args:
+  //  1. Function
+  //  2. Args[]
+  //  3. Interval in Mins
+  useFunctionOnTimer(setCurrBackdropIndex, [((prevIndex: number) => (prevIndex === (backdropKeys.length - 1)) ? 0 : prevIndex + 1 )], 0.5)
 
   return (
     <>
@@ -55,16 +74,19 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
           layout="fill"
           objectFit="cover"
           priority
-          src={`https://image.tmdb.org/t/p/original${"/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg"}`}
-          alt=''
+          src={`https://image.tmdb.org/t/p/original${backdropMap[backdropKeys[currBackdropIndex]]}`}
+          alt=""
         />
 
-        <div id="headInfoCover" className="text-left absolute top-0 left-0 right-0 bottom-0">
+        <div
+          id="headInfoCover"
+          className="text-left absolute top-0 left-0 right-0 bottom-0"
+        >
           <div className="h-full grid place-content-center">
             <h1 className="text-4xl text-gray-200 font-bold py-3">
               Welcome to Another Entertainment Database.
             </h1>
-            
+
             {/* Search Component */}
             <div className="group sm:min-w-[7rem] my-3 px-1 rounded-full bg-gray-300 bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80 drop-shadow-sm text-xl">
               <form onSubmit={handleSearch} className="flex h-10 items-center">
@@ -84,7 +106,6 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
                   />
                 </a>
               </form>
-
             </div>
           </div>
         </div>
@@ -118,7 +139,7 @@ export async function getStaticProps() {
   return {
     props: {
       initialContentTV,
-      initialContentMovies
+      initialContentMovies,
     },
   }
 }
