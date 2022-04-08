@@ -58,7 +58,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
 
   const backdropKeys = Object.keys(backdropMap);
 
-  // Custom hook:
+  // Custom hook useFunctionOnTimer:
   // Args:
   //  1. Function
   //  2. Args[]
@@ -68,7 +68,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
   return (
     <>
       {/* LANDING PAGE RIBBON */}
-      <section className="h-[450px] relative bg-slate-900  dark:bg-slate-700">
+      <section className="h-[500px] relative bg-slate-900  dark:bg-slate-700">
         <Image
           className="opacity-50 pointer-events-none select-none"
           layout="fill"
@@ -82,7 +82,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
           id="headInfoCover"
           className="text-left absolute top-0 left-0 right-0 bottom-0"
         >
-          <div className="h-full grid place-content-center">
+          <div className="h-full grid place-content-center columns-1 w-[90%] mx-auto">
             <h1 className="text-4xl text-gray-200 font-bold py-3">
               Welcome to Another Entertainment Database.
             </h1>
