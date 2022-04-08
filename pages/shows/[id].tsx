@@ -101,7 +101,9 @@ export interface SpokenLanguage {
 type className = string // allows tailwind to provide intelisense on classlist string
 
 const Show: NextPage<Props> = ({ content }) => {
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    console.log(content)
+  }, [])
 
   const firstAirDate = new Date(`${content.first_air_date} 00:00:00`)
   // const lastAirDate = new Date(`${content.last_air_date} 00:00:00`); // last == latest air date

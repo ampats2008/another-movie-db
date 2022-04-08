@@ -3,23 +3,25 @@ import { useRef, useEffect, useState } from "react"
 
 import { Spinner } from "../components/Spinner"
 import { PageError } from "../components/PageError"
+import OrderByControl from "../components/OrderByControl"
 
 import PosterCard from "../components/PosterCard"
 import useGetTVOrMovies from "../hooks/useGetTVOrMovies"
+import { useRouter } from "next/router"
 
 type Props = {
   mediaType: string
-  pageIndex: number
-  setPageIndex: React.Dispatch<React.SetStateAction<number>>
+  pageIndex?: number
+  setPageIndex?: React.Dispatch<React.SetStateAction<number>>
   initialContent: {
     page: number
-    results: Result[]
+    results: TVResult[] | MovieResult[]
     total_pages: number
     total_results: number
   }
 }
 
-export interface Result {
+export interface TVResult {
   backdrop_path: string
   first_air_date: string
   genre_ids: number[]
@@ -35,10 +37,34 @@ export interface Result {
   vote_count: number
 }
 
+export interface MovieResult {
+  adult:             boolean;
+  backdrop_path:     string;
+  genre_ids:         number[];
+  id:                number;
+  original_language: OriginalLanguage;
+  original_title:    string;
+  overview:          string;
+  popularity:        number;
+  poster_path:       string;
+  release_date:      Date;
+  title:             string;
+  video:             boolean;
+  vote_average:      number;
+  vote_count:        number;
+}
+
+export enum OriginalLanguage {
+  En = "en",
+  Es = "es",
+  Fr = "fr",
+  Sv = "sv",
+}
+
 type useGetTVOrMoviesObj = {
   data: {
     page: number
-    results: Result[]
+    results: TVResult[] | MovieResult[]
     total_pages: number
     total_results: number
   }
@@ -48,7 +74,7 @@ type useGetTVOrMoviesObj = {
 
 const Page: React.FC<Props> = ({
   mediaType,
-  pageIndex,
+  pageIndex = 1,
   setPageIndex,
   initialContent,
 }) => {
@@ -66,6 +92,8 @@ const Page: React.FC<Props> = ({
 
   const btnDirClass = sortDirection === ".desc" ? "rotate-0" : "rotate-180"
 
+  const router = useRouter();
+
   // error state
   if (isError) return <PageError error={isError} />
 
@@ -78,9 +106,7 @@ const Page: React.FC<Props> = ({
       {/* HEAD SECTION */}
       <div className="mx-auto w-[90%]">
         <h1 className="my-7 font-semibold text-3xl">
-          {mediaType === "tv"
-            ? "TV Shows"
-            : "Movies"}
+          {mediaType === "tv" ? "TV Shows" : "Movies"}
         </h1>
         <section className="my-7 lg:flex lg:justify-between">
           <h2 className="font-semibold text-2xl">
@@ -88,40 +114,10 @@ const Page: React.FC<Props> = ({
               ? "Find something bingeworthy:"
               : "Get your popcorn ready:"}
           </h2>
-          {/* Order By control */}
-          <label>
-            Order by:
-            <svg
-              ref={orderByArrowRef}
-              onClick={() => {
-                setSortDirection((prevSortDir) =>
-                  prevSortDir === ".desc" ? ".asc" : ".desc"
-                ) // toggle b/w ascending or descending
-                setPageIndex(1) // reset to first page
-              }}
-              className={`h-8 w-8 inline-block mx-[15px] h-8 w-8 dark:text-indigo-400 dark:hover:text-indigo-300 text-indigo-600 hover:text-indigo-400 cursor-pointer transition-all ${btnDirClass}`}
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <select
-              className="pagination-select dark:bg-slate-900 p-2 mt-7 lg:mt-auto"
-              value={sortBy}
-              onChange={(e) => {
-                setSortBy(e.target.value)
-                setPageIndex(1)
-              }}
-            >
-              <option value={`popularity`}>Popularity</option>
-              <option value={`vote_average`}>Average User Score</option>
-              <option value={`first_air_date`}>First Air Date</option>
-            </select>
-          </label>
+          {/* Order By control --- only display this component if we are not on 
+          the home page and if setPageIndex is defined: */}
+          {(router.route !== '/' && setPageIndex) &&
+          <OrderByControl ref={orderByArrowRef} {...{sortBy, setSortBy, setPageIndex, setSortDirection, btnDirClass}}/>}
         </section>
         <hr className="border-none h-[1px] bg-gray-400 dark:bg-gray-600" />
       </div>
@@ -130,7 +126,11 @@ const Page: React.FC<Props> = ({
         {!isLoading &&
           !isError &&
           data.results.map((contentRes) => (
-            <PosterCard key={contentRes.id} contentResource={contentRes} mediaType={mediaType} />
+            <PosterCard
+              key={contentRes.id}
+              contentResource={contentRes}
+              mediaType={mediaType}
+            />
           ))}
       </section>
     </>

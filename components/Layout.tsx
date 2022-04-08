@@ -90,7 +90,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <footer
           className={"bg-gray-200 dark:bg-slate-900 p-10 text-center mt-10"}
         >
-          Copyright &#169; 2022 Anthony Medugno.
+          <p>Copyright &#169; 2022 Anthony Medugno.</p>
+          <p className="my-4">
+            All data displayed on this website comes from {' '}
+            <a
+              className="hover:underline text-indigo-600 dark:text-indigo-300"
+              href="https://www.themoviedb.org/?language=en-US"
+              target="_blank"
+              rel="noreferrer"
+            >
+              tMDB
+            </a>.
+          </p>
+          
+          
         </footer>
       </div>
     </>
