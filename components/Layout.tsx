@@ -13,21 +13,15 @@ import { UsersIcon } from "@heroicons/react/outline"
 import { CollectionIcon } from "@heroicons/react/outline"
 import { SearchIcon } from "@heroicons/react/outline"
 import { DatabaseIcon } from "@heroicons/react/solid"
+import useMovieTVSearch from "../hooks/useMovieTVSearch"
 
 type LayoutProps = {
   children: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const searchInputRef = useRef<HTMLInputElement>(null)
-  const [searchTerm, setSearchTerm] = React.useState<string>("")
-
-  const router = useRouter()
-
-  const handleSearch: React.FormEventHandler = (e) => {
-    e.preventDefault()
-    router.push(`/search/${searchTerm}`)
-  }
+  
+  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] = useMovieTVSearch();
 
   React.useEffect(() => {
     document.getElementsByTagName("html")[0].classList.add("dark") // for dev purposes

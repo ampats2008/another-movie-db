@@ -110,9 +110,10 @@ const Page: React.FC<Props> = ({
         </h1>
         <section className="my-7 lg:flex lg:justify-between">
           <h2 className="font-semibold text-2xl">
-            {mediaType === "tv"
-              ? "Find something bingeworthy:"
-              : "Get your popcorn ready:"}
+            {/* display a greeting based on current page / mediaType */}
+            {(mediaType === "tv")
+              ? (router.route !== '/') ? "Find something bingeworthy:" : "What people are binging right now:"
+              : "Get your popcorn ready:" }
           </h2>
           {/* Order By control --- only display this component if we are not on 
           the home page and if setPageIndex is defined: */}

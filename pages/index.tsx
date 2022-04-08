@@ -1,9 +1,13 @@
 import type { NextPage } from "next"
 import Image from "next/image"
 import * as React from "react"
-import { useRef, useEffect, useState } from "react"
+
+
+import useMovieTVSearch from "../hooks/useMovieTVSearch"
 
 import Page from "../components/Page"
+
+import {SearchIcon} from '@heroicons/react/solid'
 
 type Props = {
   initialContentTV: {
@@ -39,6 +43,8 @@ export interface tvResult {
 }
 
 const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
+  
+  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] = useMovieTVSearch();
 
   return (
     <>
@@ -53,30 +59,33 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
           alt=''
         />
 
-        <div id="headInfo" className="text-left absolute abs-center">
-          <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
-            {"Halo"}{" "}
-            <span className="opacity-60">({2022})</span>
-          </h1>
-          <h1 className="text-2xl italic text-gray-200 font-normal py-3">
-            {"Find the Halo, win the war."}
-          </h1>
+        <div id="headInfoCover" className="text-left absolute top-0 left-0 right-0 bottom-0">
+          <div className="h-full grid place-content-center">
+            <h1 className="text-4xl text-gray-200 font-bold py-3">
+              Welcome to Another Entertainment Database.
+            </h1>
+            
+            {/* Search Component */}
+            <div className="group sm:min-w-[7rem] my-3 px-1 rounded-full bg-gray-300 bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80 drop-shadow-sm text-xl">
+              <form onSubmit={handleSearch} className="flex h-10 items-center">
+                <input
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={searchTerm}
+                  ref={searchInputRef}
+                  type={"text"}
+                  className="h-full w-[95%] pl-2 justify-self-start rounded-full border-none focus:outline-none bg-transparent placeholder:text-black dark:placeholder:text-gray-400"
+                  placeholder="Find something awesome to watch tonight..."
+                />
+                <a href="#" onClick={handleSearch} className="mx-auto">
+                  <SearchIcon
+                    className={
+                      "h-5 w-5 transition-colors text-indigo-600 hover:text-indigo-400  dark:text-indigo-400 dark:hover:text-indigo-300"
+                    }
+                  />
+                </a>
+              </form>
 
-          <div className="py-3 max-w-[55ch] leading-8">
-            <p
-              id="maturityRating"
-              className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
-            >
-              {'TV-14'}
-            </p>
-            <p className="ml-3 inline text-lg text-gray-200">
-              {" "}
-                <span
-                  className="after:content-['_/_'] last:after:content-['']"
-                >
-                  {'Action & Adventure / Sci-Fi & Fantasy'}
-                </span>
-            </p>
+            </div>
           </div>
         </div>
       </section>
