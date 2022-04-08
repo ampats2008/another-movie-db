@@ -105,7 +105,7 @@ const Movie: NextPage<Props> = ({ content }) => {
             <ScoreMeter
               vote_average={content.vote_average}
               viewPortSize="h-[60px] w-[60px]"
-              viewBox="5 0 40 40"
+              viewBox="3 0 40 40"
               pos={"inline-block"}
             />
             {content.maturityRating && content.maturityRating !== "" && (
