@@ -46,35 +46,48 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
   const [searchTerm, setSearchTerm, handleSearch, searchInputRef] =
     useMovieTVSearch()
 
+  // get some backdrops from the returned content to use in gallery
   const [currBackdropIndex, setCurrBackdropIndex] = React.useState<number>(0)
-
-  const backdropMap: { [str: string]: string } = {
-    Halo: "/1qpUk27LVI9UoTS7S0EixUBj5aR.jpg",
-    MoonKnight: "/64a8imymtJ4WOzIeyUHLtZnJ3wv.jpg",
-    PeakyBlinders: "/wiE9doxiLwq3WCGamDIOb2PqBqc.jpg",
-    TheFlash: "/41yaWnIT8AjIHiULHtTbKNzZTjc.jpg",
-    TheWalkingDead: "/wvdWb5kTQipdMDqCclC6Y3zr4j3.jpg",
-  }
-
-  const backdropKeys = Object.keys(backdropMap);
+  const backdropList = [
+    ...initialContentTV.results.slice(0, 5),
+    ...initialContentMovies.results.slice(0, 5),
+  ].map((content) => content.backdrop_path)
 
   // Custom hook useFunctionOnTimer:
   // Args:
   //  1. Function
   //  2. Args[]
   //  3. Interval in Mins
-  useFunctionOnTimer(setCurrBackdropIndex, [((prevIndex: number) => (prevIndex === (backdropKeys.length - 1)) ? 0 : prevIndex + 1 )], 0.5)
+  useFunctionOnTimer(
+    setCurrBackdropIndex,
+    [
+      (prevIndex: number) =>
+        prevIndex === backdropList.length - 1 ? 0 : prevIndex + 1,
+    ],
+    (1/6)
+  )
+
+  // When the background image src changes, change its key prop.
+  // This tells React to force a full re-instantiation of the image component.
+  // We want this behavior because it will replay the fadeIn animation every time the Image src changes.
+  const [backdropKey, setBackdropKey] = React.useState<string>(
+    `backdrop-${currBackdropIndex}`
+  )
+  React.useEffect(() => {
+    setBackdropKey(`backdrop-${currBackdropIndex + 1}`)
+  }, [currBackdropIndex])
 
   return (
     <>
       {/* LANDING PAGE RIBBON */}
       <section className="h-[500px] relative bg-slate-900  dark:bg-slate-700">
         <Image
-          className="opacity-50 pointer-events-none select-none"
+          key={backdropKey}
+          className={`opacity-0 animate-fadeIn pointer-events-none select-none`}
           layout="fill"
           objectFit="cover"
           priority
-          src={`https://image.tmdb.org/t/p/original${backdropMap[backdropKeys[currBackdropIndex]]}`}
+          src={`https://image.tmdb.org/t/p/original${backdropList[currBackdropIndex]}`}
           alt=""
         />
 
