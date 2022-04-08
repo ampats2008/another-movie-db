@@ -49,8 +49,8 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
   // get some backdrops from the returned content to use in gallery
   const [currBackdropIndex, setCurrBackdropIndex] = React.useState<number>(0)
   const backdropList = [
-    ...initialContentTV.results.slice(0, 5),
     ...initialContentMovies.results.slice(0, 5),
+    ...initialContentTV.results.slice(0, 5),
   ].map((content) => content.backdrop_path)
 
   // Custom hook useFunctionOnTimer:
