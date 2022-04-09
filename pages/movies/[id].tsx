@@ -132,7 +132,7 @@ const Movie: NextPage<Props> = ({ content }) => {
 
       {/* MOVIE PAGE CONTENT */}
       <div
-        className="md:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 md:grid-cols-[1fr,_1fr] lg:grid-cols-[2.25fr,_1fr]"
+        className="md:grid lg:max-w-[75vw] lg:mx-auto md:grid-cols-[1fr,_1fr] xl:grid-cols-[2fr,_1fr]"
         style={{ gridTemplateAreas: `'oview stats' 'cast cast'` }}
       >
         <section className={pageSection} style={{ gridArea: "oview" }}>
@@ -144,7 +144,7 @@ const Movie: NextPage<Props> = ({ content }) => {
 
         <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "stats" }}>
           <h2 className={pageContentH2}>Details</h2>
-          <table id="detailsTable" className="text-left text-lg">
+          <table id="detailsTable" className="text-left text-lg mx-auto w-full">
             <tbody>
               <tr>
                 <th>Release Date:</th>
