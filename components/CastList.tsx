@@ -31,6 +31,7 @@ export enum Department {
 }
 
 const CastList: React.FC<Props> = ({ contentID, seasonNum, episodeNum }) => {
+  // this could be refactored with useSWR
   const [castList, setCastList] = React.useState<CastMember[]>([])
   const [loaded, setLoaded] = React.useState<boolean>(false)
 
@@ -65,14 +66,14 @@ const CastList: React.FC<Props> = ({ contentID, seasonNum, episodeNum }) => {
   }
 
   return (
-    <div className="mx-auto mt-10 max-h-[500px] overflow-y-auto sm:w-full flex flex-wrap gap-10 sm:flex-nowrap sm:overflow-x-auto">
+    <div className="mx-auto mt-10 max-h-[500px] sm:max-h-[none] overflow-y-auto sm:w-full flex flex-wrap justify-center sm:justify-start sm:flex-nowrap sm:overflow-x-auto">
       {loaded
         ? castList.map((actor) => (
             // Actor Card
             <div
               key={actor.name}
               id="actorCard"
-              className="w-[175px] bg-gray-100 dark:bg-slate-700 rounded-lg my-4 drop-shadow-sm"
+              className="w-[175px] bg-gray-100 dark:bg-slate-700 rounded-lg my-4 mx-4 drop-shadow-sm"
             >
               {actor.profile_path ? (
                 // Actor's Headshot:

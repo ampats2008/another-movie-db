@@ -36,6 +36,11 @@ a {
   @apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
+/* for details panel on movie[id] page */
+table#detailsTable th {
+  @apply font-semibold py-6 px-5 w-[40%];
+}
+
 /* Scrollbar styles - Simple style from  https://codepen.io/aurer/pen/kGRNVw?editors=1100 */
   ::-webkit-scrollbar {
     width: 8px;

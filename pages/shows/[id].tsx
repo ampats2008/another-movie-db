@@ -1,7 +1,5 @@
 import type { NextPage } from "next"
 import * as React from "react"
-import { useRouter } from "next/router"
-import Image from "next/image"
 import Head from "next/head"
 import EpisodeListing from "../../components/EpisodeListing"
 import CastList from "../../components/CastList"
@@ -122,17 +120,16 @@ const Show: NextPage<Props> = ({ content }) => {
       </Head>
 
       {/* SHOW TITLE / DESC RIBBON */}
-      <section className="h-[250px] relative bg-slate-900  dark:bg-slate-700">
-        <Image
-          className="opacity-50 pointer-events-none select-none"
-          layout="fill"
-          objectFit="cover"
-          priority
-          src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
-          alt=''
-        />
+      <section
+        className={`p-10 xl:p-5 xl:min-h-[350px] bg-slate-900 dark:bg-slate-700 grid place-content-center`}
+        style={{
+          backgroundImage: `linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('https://image.tmdb.org/t/p/original${content.backdrop_path}')`,
+          backgroundPosition: "top center, center 40%",
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+        }}
+      >
 
-        <div id="headInfo" className="text-left absolute abs-center">
           <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
             {content.name}{" "}
             <span className="opacity-60">({firstAirDate.getFullYear()})</span>
@@ -160,7 +157,7 @@ const Show: NextPage<Props> = ({ content }) => {
               ))}
             </p>
           </div>
-        </div>
+
       </section>
 
       {/* SHOW PAGE CONTENT */}

@@ -1,7 +1,5 @@
 import type { NextPage } from "next"
 import * as React from "react"
-import { useRouter } from "next/router"
-import Image from "next/image"
 import Head from "next/head"
 import ScoreMeter from "../../components/ScoreMeter"
 import CastList from "../../components/CastList"
@@ -62,14 +60,16 @@ export interface SpokenLanguage {
 type className = string // allows tailwind to provide intelisense on classlist string
 
 const Movie: NextPage<Props> = ({ content }) => {
-  // React.useEffect(() => {
-  //   console.log(content)
-  // }, [])
+  React.useEffect(() => {
+    console.log(content)
+  }, [])
 
   const releaseDate = new Date(`${content.release_date} 00:00:00`)
+  const todaysDate = new Date()
 
   const pageContentH2: className =
     "capitalize font-semibold text-2xl mb-6 dark:text-gray-200"
+  const pageSection: className = "mt-10 p-10 xl:p-5"
 
   return (
     <>
@@ -82,74 +82,124 @@ const Movie: NextPage<Props> = ({ content }) => {
       </Head>
 
       {/* MOVIE TITLE / DESC RIBBON */}
-      <section className="h-[250px] relative bg-slate-900 dark:bg-slate-700">
-        <Image
-          className="opacity-50 pointer-events-none select-none"
-          layout="fill"
-          objectFit="cover"
-          priority
-          src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
-          alt=''
-        />
+      <section
+        className={`p-10 xl:p-5 xl:min-h-[350px] bg-slate-900 dark:bg-slate-700 grid place-content-center`}
+        style={{
+          backgroundImage: `linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('https://image.tmdb.org/t/p/original${content.backdrop_path}')`,
+          backgroundPosition: "top center, center 40%",
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+        }}
+      >
+        <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
+          <a
+            href={content.homepage}
+            target={"_blank"}
+            rel="noreferrer"
+            className="hover:opacity-80"
+            title="Go to movie homepage"
+          >
+            {content.title}
+          </a>{" "}
+          <span className="opacity-60">({releaseDate.getFullYear()})</span>
+        </h1>
+        <h1 className="text-2xl italic text-gray-200 font-normal py-3">
+          {content.tagline}
+        </h1>
 
-        <div id="headInfo" className="text-left absolute abs-center">
-          <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
-            {content.title}{" "}
-            <span className="opacity-60">({releaseDate.getFullYear()})</span>
-          </h1>
-          <h1 className="text-2xl italic text-gray-200 font-normal py-3">
-            {content.tagline}
-          </h1>
-
-          <div className="py-3 max-w-[55ch] leading-8">
-            <ScoreMeter
-              vote_average={content.vote_average}
-              viewPortSize="h-[60px] w-[60px]"
-              viewBox="3 0 40 40"
-              pos={"inline-block"}
-            />
-            {content.maturityRating && content.maturityRating !== "" && (
-              <p
-                id="maturityRating"
-                className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
-              >
-                {content.maturityRating}
-              </p>
-            )}
-            <p className="ml-3 inline text-lg text-gray-200">
-              {" "}
-              {content.genres.map((genre) => (
-                <span
-                  className="after:content-['_/_'] last:after:content-['']"
-                  key={`${genre.id}-${genre.name}`}
-                >
-                  {genre.name}
-                </span>
-              ))}
+        <div className="py-3 max-w-[55ch] leading-8">
+          {content.maturityRating && content.maturityRating !== "" && (
+            <p
+              id="maturityRating"
+              className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
+            >
+              {content.maturityRating}
             </p>
-          </div>
+          )}
+          <p className="ml-3 inline text-lg text-gray-200">
+            {" "}
+            {content.genres.map((genre) => (
+              <span
+                className="after:content-['_/_'] last:after:content-['']"
+                key={`${genre.id}-${genre.name}`}
+              >
+                {genre.name}
+              </span>
+            ))}
+          </p>
         </div>
       </section>
 
       {/* MOVIE PAGE CONTENT */}
       <div
-        className="xl:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 grid-cols-[3fr,_5fr]"
-        style={{ gridTemplateAreas: `'oview oview' 'cast cast'` }}
+        className="md:grid lg:max-w-[75vw] lg:mx-auto grid-y-5 md:grid-cols-[1fr,_1fr] lg:grid-cols-[2.25fr,_1fr]"
+        style={{ gridTemplateAreas: `'oview stats' 'cast cast'` }}
       >
-        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "oview" }}>
+        <section className={pageSection} style={{ gridArea: "oview" }}>
           <h2 className={pageContentH2}>Overview</h2>
           <p className="indent-[4ch] mt-10 text-lg leading-loose">
             {content.overview}
           </p>
         </section>
 
-        {/* <section className="mt-10 p-10 xl:p-5" style={{gridArea: 'lastEp'}}>
-                <h2 className={pageContentH2}>Last Episode</h2>
-                <EpisodeListing episode={content.last_episode_to_air}/>
-            </section>
-            */}
+        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "stats" }}>
+          <h2 className={pageContentH2}>Details</h2>
+          <table id="detailsTable" className="text-left text-lg">
+            <tbody>
+              <tr>
+                <th>Release Date:</th>
+                <td>{releaseDate.toLocaleDateString()}</td>
+              </tr>
+              <tr>
+                <th>Status:</th>
+                <td>{content.status}</td>
+              </tr>
+              <tr>
+                <th>Runtime:</th>
+                <td>
+                  {Math.floor(content.runtime / 60)} hr, {content.runtime % 60}{" "}
+                  min
+                </td>
+              </tr>
+              {content.status.toLowerCase() === "released" &&
+                content.revenue !== null && (
+                  <tr>
+                    <th>Revenue:</th>
+                    {/* I've noticed that recently released movies return a revenue amount of $0, which is inaccurate: */}
+                    {/* Warn users of bad data if the revenue amt is 0 and the movie was released within the last 3 months or so */}
+                    {content.revenue === 0 &&
+                    [
+                      todaysDate.getMonth() - 2,
+                      todaysDate.getMonth() - 1,
+                      todaysDate.getMonth(),
+                    ].includes(releaseDate.getMonth()) &&
+                    todaysDate.getFullYear() === releaseDate.getFullYear() ? (
+                      <td>
+                        It is likely that there is no revenue data yet. Check
+                        back later.
+                      </td>
+                    ) : (
+                      <td>$ {content.revenue.toLocaleString()}</td>
+                    )}
+                  </tr>
+                )}
 
-        <section className="mt-10 p-10 xl:p-5" style={{ gridArea: "cast" }}>
+              <tr>
+                <th>Average User Score:</th>
+                <td>
+                  <ScoreMeter
+                    vote_average={content.vote_average}
+                    viewPortSize="h-[60px] w-[60px]"
+                    viewBox="0 0 40 40"
+                    pos={"inline-block"}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section className={pageSection} style={{ gridArea: "cast" }}>
           <h2 className={pageContentH2}>Cast</h2>
           <CastList contentID={content.id} />
         </section>
