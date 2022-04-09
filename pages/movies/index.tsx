@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react"
 
 import Page from "../../components/Page"
 import Pagination from "../../components/Pagination"
+import PosterCard from "../../components/PosterCard"
 
 type Props = {
   initialContent: {
@@ -15,20 +16,20 @@ type Props = {
 }
 
 export interface MovieResult {
-  adult:             boolean;
-  backdrop_path:     string;
-  genre_ids:         number[];
-  id:                number;
-  original_language: OriginalLanguage;
-  original_title:    string;
-  overview:          string;
-  popularity:        number;
-  poster_path:       string;
-  release_date:      Date;
-  title:             string;
-  video:             boolean;
-  vote_average:      number;
-  vote_count:        number;
+  adult: boolean
+  backdrop_path: string
+  genre_ids: number[]
+  id: number
+  original_language: OriginalLanguage
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  release_date: Date
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
 }
 
 export enum OriginalLanguage {
@@ -41,10 +42,26 @@ export enum OriginalLanguage {
 const Movie: NextPage<Props> = ({ initialContent }) => {
   // hooks
   const [pageIndex, setPageIndex] = useState<number>(1)
-  
+
   return (
     <>
-      <Page mediaType="movie" {...{ pageIndex, setPageIndex, initialContent}} />
+      <Page
+        mediaType="movie"
+        {...{ pageIndex, setPageIndex, initialContent }}
+        renderCards={(cards, mediaType) => (
+          <>
+            <section className="flex flex-wrap justify-center">
+              {cards.map((contentRes) => (
+                <PosterCard
+                  key={contentRes.id}
+                  contentResource={contentRes}
+                  mediaType={mediaType}
+                />
+              ))}
+            </section>
+          </>
+        )}
+      />
       <Pagination {...{ pageIndex, setPageIndex }} />
     </>
   )

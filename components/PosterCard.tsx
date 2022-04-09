@@ -36,7 +36,7 @@ const PosterCard: React.FC<Props> = ({ mediaType, contentResource }) => {
   return (
     <div
       id="card"
-      className="m-10 w-min rounded-lg transition-all ease-out hover:scale-[1.05] cursor-pointer drop-shadow-md hover:drop-shadow-2xl will-change-[filter]"
+      className="my-10 mx-3 sm:m-10 w-min rounded-lg transition-all ease-out hover:scale-[1.05] cursor-pointer drop-shadow-md hover:drop-shadow-2xl will-change-[filter]"
       onClick={goToShowOrMoviePage}
     >
       <div id="posterCont" className="w-[200px] h-[300px] relative">

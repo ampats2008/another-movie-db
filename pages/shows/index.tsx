@@ -4,17 +4,18 @@ import { useRef, useEffect, useState } from "react"
 
 import Page from "../../components/Page"
 import Pagination from "../../components/Pagination"
+import PosterCard from "../../components/PosterCard"
 
 type Props = {
   initialContent: {
     page: number
-    results: Result[]
+    results: TVResult[]
     total_pages: number
     total_results: number
   }
 }
 
-export interface Result {
+export interface TVResult {
   backdrop_path: string
   first_air_date: string
   genre_ids: number[]
@@ -33,10 +34,26 @@ export interface Result {
 const Shows: NextPage<Props> = ({ initialContent }) => {
   // hooks
   const [pageIndex, setPageIndex] = useState<number>(1)
-  
+
   return (
     <>
-      <Page mediaType="tv" {...{ pageIndex, setPageIndex, initialContent}} />
+      <Page
+        mediaType="tv"
+        {...{ pageIndex, setPageIndex, initialContent }}
+        renderCards={(cards, mediaType) => (
+          <>
+            <section className="flex flex-wrap justify-center">
+              {cards.map((contentRes) => (
+                <PosterCard
+                  key={contentRes.id}
+                  contentResource={contentRes}
+                  mediaType={mediaType}
+                />
+              ))}
+            </section>
+          </>
+        )}
+      />
       <Pagination {...{ pageIndex, setPageIndex }} />
     </>
   )

@@ -8,6 +8,7 @@ import Page from "../components/Page"
 
 import { SearchIcon } from "@heroicons/react/solid"
 import useFunctionOnTimer from "../hooks/useFunctionOnTimer"
+import HomePageCardContainer from "../components/HomePageCardContainer"
 
 type Props = {
   initialContentTV: {
@@ -56,7 +57,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
   // Custom hook useFunctionOnTimer:
   // Args:
   //  1. Function
-  //  2. Args[]
+  //  2. Function's Args[]
   //  3. Interval in Mins
   useFunctionOnTimer(
     setCurrBackdropIndex,
@@ -64,7 +65,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
       (prevIndex: number) =>
         prevIndex === backdropList.length - 1 ? 0 : prevIndex + 1,
     ],
-    (1/6)
+    0.5
   )
 
   // When the background image src changes, change its key prop.
@@ -96,19 +97,19 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
           className="text-left absolute top-0 left-0 right-0 bottom-0"
         >
           <div className="h-full grid place-content-center columns-1 w-[90%] mx-auto">
-            <h1 className="text-4xl text-gray-200 font-bold py-3">
+            <h1 className="text-5xl text-gray-200 font-bold py-3">
               Welcome to Another Entertainment Database.
             </h1>
 
             {/* Search Component */}
-            <div className="group sm:min-w-[7rem] my-3 px-1 rounded-full bg-gray-300 bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80 drop-shadow-sm text-xl">
+            <div className="group my-3 px-1 xl:w-[80%] xl:mx-auto rounded-full bg-gray-300 bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80 drop-shadow-sm text-xl">
               <form onSubmit={handleSearch} className="flex h-10 items-center">
                 <input
                   onChange={(e) => setSearchTerm(e.target.value)}
                   value={searchTerm}
                   ref={searchInputRef}
                   type={"text"}
-                  className="h-full w-[95%] pl-2 justify-self-start rounded-full border-none focus:outline-none bg-transparent placeholder:text-black dark:placeholder:text-gray-400"
+                  className="h-full w-[95%] pl-2 justify-self-start rounded-full border-none focus:outline-none bg-transparent placeholder:text-gray-600 dark:placeholder:text-gray-400"
                   placeholder="Find something awesome to watch tonight..."
                 />
                 <a href="#" onClick={handleSearch} className="mx-auto">
@@ -123,8 +124,21 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
           </div>
         </div>
       </section>
-      <Page mediaType="tv" initialContent={initialContentTV} />
-      <Page mediaType="movie" initialContent={initialContentMovies} />
+      {/* CARD CONTAINER SECTIONS (Page Components) */}
+      <Page
+        mediaType="tv"
+        initialContent={initialContentTV}
+        renderCards={(cards, mediaType) => (
+          <HomePageCardContainer {...{cards, mediaType}} />
+        )}
+      />
+      <Page
+        mediaType="movie"
+        initialContent={initialContentMovies}
+        renderCards={(cards, mediaType) => (
+          <HomePageCardContainer {...{cards, mediaType}} />
+        )}
+      />
     </>
   )
 }
