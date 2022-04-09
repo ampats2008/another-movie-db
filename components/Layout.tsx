@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import Head from "next/head"
 // import styles from '../styles/Layout.module.css'
 import Link from "next/link"
@@ -9,23 +9,25 @@ import { useRouter } from "next/router"
 import { HomeIcon } from "@heroicons/react/outline"
 import { FilmIcon } from "@heroicons/react/outline"
 import { DesktopComputerIcon } from "@heroicons/react/outline"
-import { UsersIcon } from "@heroicons/react/outline"
-import { CollectionIcon } from "@heroicons/react/outline"
+// import { UsersIcon } from "@heroicons/react/outline"
+// import { CollectionIcon } from "@heroicons/react/outline"
 import { SearchIcon } from "@heroicons/react/outline"
 import { DatabaseIcon } from "@heroicons/react/solid"
+import { MoonIcon } from "@heroicons/react/outline"
+import { SunIcon } from "@heroicons/react/outline"
+
 import useMovieTVSearch from "../hooks/useMovieTVSearch"
+import ToggleSwitch from "./ToggleSwitch"
 
 type LayoutProps = {
   children: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  
-  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] = useMovieTVSearch();
+  const [searchTerm, setSearchTerm, handleSearch, searchInputRef] =
+    useMovieTVSearch()
 
-  React.useEffect(() => {
-    document.getElementsByTagName("html")[0].classList.add("dark") // for dev purposes
-  }, [])
+  
 
   return (
     <>
@@ -52,13 +54,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </a>
             </Link>
           </div>
-          <nav className="sm:w-full my-2 max-w-screen-lg sm:flex flex-wrap">
+          <nav className="sm:w-full my-2 max-w-screen-md sm:flex flex-wrap">
             <NavLink name="Home" />
             <NavLink name="TV" />
             <NavLink name="Movies" />
-            <NavLink name="People" />
-            <NavLink name="Genres" />
-
+            {/* <NavLink name="People" /> */}
+            {/* <NavLink name="Genres" /> */}
+            {/* Search Bar */}
             <div className="group sm:min-w-[7rem] px-1 m-auto rounded-full bg-gray-300 dark:bg-slate-700 drop-shadow-sm">
               <form onSubmit={handleSearch} className="flex h-7 items-center">
                 <input
@@ -78,6 +80,27 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </a>
               </form>
             </div>
+            {/* Dark Mode Toggle */}
+            <ToggleSwitch
+              toggleAction={() => {document.getElementsByTagName("html")[0].classList.toggle("dark")}}
+              renderStyle={(status, toggleStatus) => (
+                <>
+                  <div className="grid place-items-center mx-5">
+                    <button
+                      title="Toggle theme"
+                      onClick={toggleStatus}
+                      className="p-5 hover:animate-[spin_500ms_ease-in-out] text-indigo-600 dark:text-indigo-400 hover:text-indigo-400 dark:hover:text-indigo-300"
+                    >
+                      {status ? (
+                        <SunIcon className="h-6 w-6" />
+                      ) : (
+                        <MoonIcon className="h-6 w-6" />
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
+            />
           </nav>
         </header>
         <main className={"min-h-[100vh]"}>{children}</main>
@@ -86,7 +109,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         >
           <p>Copyright &#169; 2022 Anthony Medugno.</p>
           <p className="my-4">
-            All data displayed on this website comes from {' '}
+            All data displayed on this website comes from{" "}
             <a
               className="hover:underline text-indigo-600 dark:text-indigo-300"
               href="https://www.themoviedb.org/?language=en-US"
@@ -94,10 +117,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               rel="noreferrer"
             >
               tMDB
-            </a>.
+            </a>
+            .
           </p>
-          
-          
         </footer>
       </div>
     </>
@@ -128,8 +150,8 @@ const NavLink: React.FC<NavLinkProps> = ({ name }) => {
     Home: <HomeIcon className={iconClass} />,
     Movies: <FilmIcon className={iconClass} />,
     TV: <DesktopComputerIcon className={iconClass} />,
-    People: <UsersIcon className={iconClass} />,
-    Genres: <CollectionIcon className={iconClass} />,
+    // People: <UsersIcon className={iconClass} />,
+    // Genres: <CollectionIcon className={iconClass} />,
     Search: <SearchIcon className={iconClass} />,
   }
 
