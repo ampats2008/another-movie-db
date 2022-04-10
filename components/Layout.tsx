@@ -144,7 +144,7 @@ const NavLink: React.FC<NavLinkProps> = ({ name }) => {
   if (name === "TV") link = "/shows"
 
   const iconClass: className =
-    "inline h-6 w-6 text-indigo-600 dark:text-indigo-400 translate-x-10 rotate-0 transition-transform ease-in-out duration-500 group-hover:translate-x-0 group-hover:rotate-[360deg] relative z-[1]"
+    "inline h-6 w-6 text-indigo-600 dark:text-indigo-400 sm:translate-x-10 sm:rotate-0 sm:transition-transform sm:ease-in-out sm:duration-500 sm:group-hover:translate-x-0 sm:group-hover:rotate-[360deg] sm:relative z-[1]"
 
   const iconMap: { [name: string]: JSX.Element } = {
     Home: <HomeIcon className={iconClass} />,
@@ -158,14 +158,14 @@ const NavLink: React.FC<NavLinkProps> = ({ name }) => {
   return (
     <>
       <Link href={link}>
-        <a className="group sm:min-w-[7rem] px-1 my-4 mx-auto flex items-center relative">
+        <a className="group w-[7rem] hover:dark:text-indigo-300 hover:text-indigo-400 sm:w-auto sm:min-w-[7rem] px-1 my-4 mx-auto flex justify-between sm:justify-start items-center relative">
           {iconMap[name]} {/* hero icon goes here */}
           <span
             className="
                 ml-2
-                invisible group-hover:visible 
-                opacity-0 transition-all duration-500 group-hover:opacity-100 
-                -translate-x-1/2 group-hover:translate-x-0 relative"
+                sm:invisible sm:group-hover:visible 
+                sm:opacity-0 sm:transition-all sm:duration-500 sm:group-hover:opacity-100 
+                sm:-translate-x-1/2 sm:group-hover:translate-x-0 sm:relative"
           >
             {name}
           </span>

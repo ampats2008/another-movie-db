@@ -65,7 +65,7 @@ const Home: NextPage<Props> = ({ initialContentTV, initialContentMovies }) => {
       (prevIndex: number) =>
         prevIndex === backdropList.length - 1 ? 0 : prevIndex + 1,
     ],
-    0.5
+    1/6
   )
 
   // When the background image src changes, change its key prop.
