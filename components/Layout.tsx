@@ -158,7 +158,7 @@ const NavLink: React.FC<NavLinkProps> = ({ name }) => {
   return (
     <>
       <Link href={link}>
-        <a className="group w-[7rem] hover:dark:text-indigo-300 hover:text-indigo-400 sm:w-auto sm:min-w-[7rem] px-1 my-4 mx-auto flex justify-between sm:justify-start items-center relative">
+        <a className="group w-[7rem] hover:dark:text-indigo-300 sm:dark:hover:text-gray-300 hover:text-indigo-400 sm:hover:text-slate-900 sm:w-auto sm:min-w-[7rem] px-1 my-4 mx-auto flex justify-between sm:justify-start items-center relative">
           {iconMap[name]} {/* hero icon goes here */}
           <span
             className="
