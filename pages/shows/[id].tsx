@@ -129,35 +129,41 @@ const Show: NextPage<Props> = ({ content }) => {
           backgroundRepeat: "no-repeat, no-repeat",
         }}
       >
+        <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
+          <a
+            href={content.homepage}
+            target={"_blank"}
+            rel="noreferrer"
+            className="hover:opacity-80"
+            title="Go to movie homepage"
+          >
+            {content.name}
+          </a>{" "}
+          <span className="opacity-60">({firstAirDate.getFullYear()})</span>
+        </h1>
+        <h1 className="text-2xl italic text-gray-200 font-normal py-3">
+          {content.tagline}
+        </h1>
 
-          <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
-            {content.name}{" "}
-            <span className="opacity-60">({firstAirDate.getFullYear()})</span>
-          </h1>
-          <h1 className="text-2xl italic text-gray-200 font-normal py-3">
-            {content.tagline}
-          </h1>
-
-          <div className="py-3 max-w-[55ch] leading-8">
-            <p
-              id="maturityRating"
-              className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
-            >
-              {content.maturityRating}
-            </p>
-            <p className="ml-3 inline text-lg text-gray-200">
-              {" "}
-              {content.genres.map((genre) => (
-                <span
-                  className="after:content-['_/_'] last:after:content-['']"
-                  key={`${genre.id}-${genre.name}`}
-                >
-                  {genre.name}
-                </span>
-              ))}
-            </p>
-          </div>
-
+        <div className="py-3 max-w-[55ch] leading-8">
+          <p
+            id="maturityRating"
+            className="inline font-semibold text-slate-900 text-lg w-fit px-[6px] py-[4px] rounded-lg bg-gray-200 bg-opacity-80"
+          >
+            {content.maturityRating}
+          </p>
+          <p className="ml-3 inline text-lg text-gray-200">
+            {" "}
+            {content.genres.map((genre) => (
+              <span
+                className="after:content-['_/_'] last:after:content-['']"
+                key={`${genre.id}-${genre.name}`}
+              >
+                {genre.name}
+              </span>
+            ))}
+          </p>
+        </div>
       </section>
 
       {/* SHOW PAGE CONTENT */}
