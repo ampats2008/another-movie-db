@@ -60,12 +60,9 @@ export interface SpokenLanguage {
 type className = string // allows tailwind to provide intelisense on classlist string
 
 const Movie: NextPage<Props> = ({ content }) => {
-  React.useEffect(() => {
-    console.log(content)
-  }, [])
 
   const releaseDate = new Date(`${content.release_date} 00:00:00`)
-  const todaysDate = new Date()
+  const todaysDate = new Date() // for comparison
 
   const pageContentH2: className =
     "capitalize font-semibold text-2xl mb-6 dark:text-gray-200"
@@ -93,7 +90,7 @@ const Movie: NextPage<Props> = ({ content }) => {
       >
         <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
           <a
-            href={content.homepage}
+            href={(content.homepage && content.homepage !== '') ? content.homepage : undefined}
             target={"_blank"}
             rel="noreferrer"
             className="hover:opacity-80"

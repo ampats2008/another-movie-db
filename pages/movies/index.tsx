@@ -39,7 +39,7 @@ export enum OriginalLanguage {
   Sv = "sv",
 }
 
-const Movie: NextPage<Props> = ({ initialContent }) => {
+const Movies: NextPage<Props> = ({ initialContent }) => {
   // hooks
   const [pageIndex, setPageIndex] = useState<number>(1)
 
@@ -67,24 +67,29 @@ const Movie: NextPage<Props> = ({ initialContent }) => {
   )
 }
 
-export default Movie
+export default Movies
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
 // direct database queries.
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&with_original_language=en&region=US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=1950-01-01&vote_average.gte=2&page=1&with_watch_monetization_types=flatrate`
   )
-  const initialContent = await res.json()
+  const initialContent : {
+    page: number
+    results: MovieResult[]
+    total_pages: number
+    total_results: number
+  } = await res.json()
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      initialContent,
+      initialContent
     },
   }
 }

@@ -131,7 +131,7 @@ const Show: NextPage<Props> = ({ content }) => {
       >
         <h1 className="capitalize text-4xl text-gray-200 font-bold py-3">
           <a
-            href={content.homepage}
+            href={(content.homepage && content.homepage !== '') ? content.homepage : undefined}
             target={"_blank"}
             rel="noreferrer"
             className="hover:opacity-80"

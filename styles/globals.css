@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: Segoe UI, sans-serif;
-  @apply text-slate-900 bg-gray-300 dark:text-gray-300  dark:bg-slate-800;
+  @apply text-slate-900 bg-gray-300 dark:text-gray-300 dark:bg-slate-800;
 }
 
 a {
@@ -45,28 +45,35 @@ table#detailsTable td {
   @apply ml-auto text-right;
 }
 
-table#detailsTable th, table#detailsTable td {
+table#detailsTable th,
+table#detailsTable td {
   @apply p-4;
 }
 
-/* Scrollbar styles - Simple style from  https://codepen.io/aurer/pen/kGRNVw?editors=1100 */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: rgba(0,0,0,0.1);
-  }
-  ::-webkit-scrollbar-thumb{
-    border-radius: 10px;
-    background: rgba(0,0,0,0.2);
-  }
-  ::-webkit-scrollbar-thumb:hover{
-  	background: rgba(0,0,0,0.4);
-  }
-  ::-webkit-scrollbar-thumb:active{
-  	background: rgba(0,0,0,.9);
-  }
+.tmdbLogo {
+  fill: url(#linear-gradient);
+}
 
-  
+/* Scrollbar styles - Simple style from  https://codepen.io/aurer/pen/kGRNVw?editors=1100 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, .9);
+}
