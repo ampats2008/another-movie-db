@@ -1,21 +1,21 @@
 import * as React from "react"
 
 type Props = {
-    sortBy : string,
-    setSortBy : React.Dispatch<React.SetStateAction<string>>,
-    setPageIndex: React.Dispatch<React.SetStateAction<number>>,
-    setSortDirection: React.Dispatch<React.SetStateAction<string>>,
-    btnDirClass: string,
+  sortBy: string
+  setSortBy: React.Dispatch<React.SetStateAction<string>>
+  setPageIndex: React.Dispatch<React.SetStateAction<number>>
+  setSortDirection: React.Dispatch<React.SetStateAction<string>>
+  btnDirClass: string
+  mediaType: string
 }
 
-const OrderByControl: React.ForwardRefRenderFunction<SVGSVGElement | null, Props> = ({
-  sortBy,
-  setSortBy,
-  setPageIndex,
-  setSortDirection,
-  btnDirClass
-}, ref) => {
-
+const OrderByControl: React.ForwardRefRenderFunction<
+  SVGSVGElement | null,
+  Props
+> = (
+  { sortBy, setSortBy, setPageIndex, setSortDirection, btnDirClass, mediaType },
+  ref
+) => {
   return (
     <>
       <label>
@@ -48,7 +48,11 @@ const OrderByControl: React.ForwardRefRenderFunction<SVGSVGElement | null, Props
         >
           <option value={`popularity`}>Popularity</option>
           <option value={`vote_average`}>Average User Score</option>
-          <option value={`first_air_date`}>First Air Date</option>
+          {mediaType === "tv" ? (
+            <option value={`first_air_date`}>First Air Date</option>
+          ) : (
+            <option value={`primary_release_date`}>Release Date</option>
+          )}
         </select>
       </label>
     </>
