@@ -5,25 +5,30 @@ import { useRouter } from "next/router"
 
 type Props = {
   mediaType: string
-  contentResource:
-    | {
-        id: number
-        name: string
-        poster_path: string
-        vote_average: number
-      }
-    | {
-        id: number
-        title: string
-        poster_path: string
-        vote_average: number
-      }
+  contentResource: ContentResourceMovie | ContentResourceTV
+}
+
+type ContentResource = {
+  id: number
+  poster_path: string
+  vote_average: number
+}
+
+// ContentResource will always have either title or name, but never both:
+interface ContentResourceMovie extends ContentResource {
+  title: string
+  name?: never
+}
+
+interface ContentResourceTV extends ContentResource {
+  name: string
+  title?: never
 }
 
 const PosterCard: React.FC<Props> = ({ mediaType, contentResource }) => {
   const { id, name, title, poster_path, vote_average } = contentResource
 
-  const contentName = name ? name : title
+  const contentName = (name) ? name : title
 
   const router = useRouter()
 
