@@ -19,7 +19,7 @@ This was my first time using Next.js, and I enjoyed using its built-in features 
 I used this custom hook by Vercel to simplify my CSR code on the */shows* and */movies* pages. I used it to create a custom hook, *useGetTVOrMovies.tsx*, which would fetch the data for `<Page />` and refetch the data if necessary. In my case, it allowed me to easily implement pagination, error handling, and loading state; however, it also provides more built-in features / optimizations which I haven't explored yet. See the [useSWR website](https://swr.vercel.app/) for more information.
 
 ### My Custom Hooks
-For this project, I created a couple custom hooks to make my code cleaner and to make my logic reusable for future projects. Here are a couple of them:
+For this project, I created a few custom hooks to make my code cleaner and to make my logic reusable for future projects. Here are a couple of them:
 - *useFunctionOnTimer(Function, FnArgs[], Mins)* - This hook takes a function, an array of its arguments, and a time interval in minutes. It will execute the function on every pass of the time interval. It's pretty simple, but it allows you to remove a fairly sizeable useEffect block from your code.
 - *useMovieTVSearch()* - This hook provides the logic behind any search bar created on my app (there are two of them). It returns a piece of state (searchTerm, setSearchTerm), a ref to the search bar (searchInputRef), and a FormSubmit-EventHandler (handleSearch). This hook allowed me to display two visually distinct search bars in two different components, but have them behave the exact same way. 
 
