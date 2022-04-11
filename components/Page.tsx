@@ -132,6 +132,7 @@ const Page: React.FC<Props> = ({
                 setPageIndex,
                 setSortDirection,
                 btnDirClass,
+                mediaType
               }}
             />
           )}
